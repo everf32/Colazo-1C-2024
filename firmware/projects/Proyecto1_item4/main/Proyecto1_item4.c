@@ -137,16 +137,29 @@ void mostrarEnDisplay(uint32_t dato, uint8_t digitos_salida, gpioConf_t *vectorG
 /*==================[external functions definition]==========================*/
 void app_main(void)
 {
+    /*
+     Creo el vector de estructuras del tipo gpioConf_t que contienen los puertos GPIO_20, GPIO_21, GPIO_22 
+     y GPIO_23, con sus correspondientes direcciones(entrada/salida)
+    */
     gpioConf_t arregloGPIO[4] = {
         {GPIO_20, GPIO_OUTPUT}, {GPIO_21, GPIO_OUTPUT}, {GPIO_22, GPIO_OUTPUT}, {GPIO_23, GPIO_OUTPUT}};
 
+    /*
+     Inicializo los puertos GPIO en el vector de 4 elementos
+    */
     for (int i = 0; i < 4; i++)
     {
         GPIOInit(arregloGPIO[i].pin, arregloGPIO[i].dir);
     }
-
+    /*
+     Creo el vector de estructuras del tipo gpioConf_t que contienen los puertos GPIO_9, GPIO_18, GPIO_19 
+     con sus correspondientes direcciones(entrada/salida)
+    */
     gpioConf_t arregloGpioLCD[3] = {{GPIO_9, GPIO_OUTPUT}, {GPIO_18, GPIO_OUTPUT}, {GPIO_19, GPIO_OUTPUT}};
 
+    /*
+    Inicializo los puertos GPIO en el vector de 3 elementos
+    */
     for (int j = 0; j < 3; j++)
     {
         GPIOInit(arregloGpioLCD[j].pin, arregloGpioLCD[j].dir);
