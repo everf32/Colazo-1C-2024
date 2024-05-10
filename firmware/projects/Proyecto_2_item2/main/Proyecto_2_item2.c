@@ -1,14 +1,18 @@
-/*! @mainpage Medidor de distancia por ultrasonido
+/*! @mainpage Medidor de distancia por ultrasonido(Item 2)
  *
  * \section genDesc General Description
- *
- * This example makes LED_1, LED_2 and LED_3 blink at different rates, using FreeRTOS tasks.
+ * Esta aplicacion permite la detección de distancias mediante un sensor de ultrasonido, encendiendo leds para 
+ * ciertos rangos de distancias y mostrando dicha distancia en una pantalla LCD mediante la utilizacion de tareas 
+ * controladas por timers e interrupciones.
+ * 
  *
  * @section changelog Changelog
  *
- * |   Date	    | Description                                    |
+ * | Peripheral | ESP32                                          |
  * |:----------:|:-----------------------------------------------|
- * | 10/04/2024 | Document creation		                         |
+ * | lcditse0803|            		                             |
+ * | HC-SR04    | GPIO_3                                         |
+ * |
  *
  * @author Ever Colazo (everf97@live.com)
  *
@@ -27,29 +31,75 @@
 #include "switch.h"
 #include "timer_mcu.h"
 /*==================[macros and definitions]=================================*/
+/** @def REFRESCO_MEDICION 
+ * @brief Representa el tiempo en microsegundos que estará comandando el disparo del timer 
+ * que activa la tarea de medir
+ * 
+*/
 #define REFRESCO_MEDICION 1000000
+
+/** @def REFRESCO_DISPLAY
+ * @brief Representa el tiempo en microsegundos que estará comandando el disparo del timer 
+ * que activa la tarea de mostrar por display y control de Leds
+ * 
+*/
 #define REFRESCO_DISPLAY 100000
 /*==================[internal data definition]===============================*/
+/**
+ * @def Medir_task_handle 
+ * @brief Objeto para el manejo de tarea medir
+*/
 TaskHandle_t Medir_task_handle = NULL;
+
+/**
+ * @def Mostrar_task_handle
+ * @brief Objeto para el manejo de tarea mostrar
+ * 
+*/
 TaskHandle_t Mostrar_task_handle = NULL;
-TaskHandle_t Teclas_task_handle = NULL;
+
+/**
+ * @def distancia 
+ * @brief Variable global entera sin signo que almacena la distancia medida por el sensor de ultrasonido
+*/
 uint16_t distancia = 0;
+
+/**
+ * @def hold
+ * @brief Variable global de tipo booleana que almacena el estado de "mantener" el último valor sensado
+*/
 bool hold;
+
+/**
+ * @def on
+ * @brief Variable global de tipo booleana que almacena el estado de encendido del sistema de medición
+*/
 bool on;
 
 /*==================[internal functions declaration]=========================*/
-
+/**
+ * @fn FuncTimerMedir()
+ * @brief Envía una notificación a la tarea medir
+*/
 void FuncTimerMedir(void *param)
 {
     vTaskNotifyGiveFromISR(Medir_task_handle, pdFALSE); /* Envía una notificación a la tarea asociada a medir*/
 }
 
+/**
+ * @fn FuncTimerMostrar()
+ * @brief Envía una notificación a la tarea mostrar
+*/
 void FuncTimerMostrar(void *param)
 {
     vTaskNotifyGiveFromISR(Mostrar_task_handle, pdFALSE); /* Envía una notificación a la tarea asociada al mostrar */
 }
 
-static void medir(void *pvParameter)
+/**
+ * @fn medirTask()
+ * @brief Tarea dedicada a realizar las mediciones de distancia con el sensor de ultrasonido
+*/
+static void medirTask()
 {
     while (true)
     {
@@ -61,7 +111,12 @@ static void medir(void *pvParameter)
     }
 }
 
-static void mostrarTask(void *pvParameter)
+/**
+ * @fn mostrarTask()
+ * @brief Tarea destinada a la realización de encender LEDs en función de la distancia sensada además de mostrar 
+ * por LCD la distancia medida en el sensor.
+*/
+static void mostrarTask()
 {
     while (true)
     {
@@ -107,11 +162,21 @@ static void mostrarTask(void *pvParameter)
     }
 }
 
+/**
+ * @fn TeclaOn()
+ * @brief Cambia el estado de la bandera booleana on
+ * 
+*/
 void TeclaOn()
 {
     on = !on;
 }
 
+/**
+ * @fn TeclaHold()
+ * @brief Cambia el estado de la bandera booleana Hold
+ * 
+*/
 void TeclaHold()
 {
     if (on)
@@ -153,7 +218,7 @@ void app_main(void)
     SwitchActivInt(SWITCH_2, &TeclaHold, NULL);
 
     /*creacion de tareas*/
-    xTaskCreate(&medir, "medir", 512, NULL, 5, &Medir_task_handle);
+    xTaskCreate(&medirTask, "medir", 512, NULL, 5, &Medir_task_handle);
     xTaskCreate(&mostrarTask, "mostrar", 512, NULL, 5, &Mostrar_task_handle);
 
     /*Inicio del conteo de timers*/
