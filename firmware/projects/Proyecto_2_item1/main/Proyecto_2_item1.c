@@ -62,7 +62,10 @@ bool hold;
 bool on;
 
 /*==================[internal functions declaration]=========================*/
-
+/**
+ * @fn medirTask()
+ * @brief Tarea dedicada a realizar las mediciones de distancia con el sensor de ultrasonido
+*/
 static void medirTask(void *pvParameter)
 { // en esta tarea se mide las distancias por el sensor y se modifica el estado de los leds dependiendo lo que se este midiendo
     while (true)
@@ -75,7 +78,7 @@ static void medirTask(void *pvParameter)
     }
 }
 
-static void mostarTask(void *pvParameter)
+static void mostrarTask(void *pvParameter)
 {
     while (true)
     {
@@ -147,5 +150,5 @@ void app_main(void)
 
     xTaskCreate(&medirTask, "medir", 512, NULL, 5, NULL);
     xTaskCreate(&teclasTask, "mostrar", 512, NULL, 5, NULL);
-    xTaskCreate(&mostarTask, "teclas", 512, NULL, 5, NULL);
+    xTaskCreate(&mostrarTask, "teclas", 512, NULL, 5, NULL);
 }
