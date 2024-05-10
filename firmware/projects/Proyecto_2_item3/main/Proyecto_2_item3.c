@@ -1,15 +1,24 @@
-/*! @mainpage Medidor de distancia por ultrasonido
+/*! @mainpage Medidor de distancia por ultrasonido(Item 3)
  *
  * \section genDesc General Description
  *
- * This example makes LED_1, LED_2 and LED_3 blink at different rates, using FreeRTOS tasks.
+ * Esta aplicacion permite la detección de distancias mediante un sensor de ultrasonido, encendiendo leds para 
+ * ciertos rangos de distancias y mostrando dicha distancia en una pantalla LCD mediante la utilizacion de tareas 
+ * controladas por timers e interrupciones. Además de informar por conexión serie la distancia medida por el sensor.
+ * 
+ * @section hardConn Hardware Connection 
+ * 
+ * | Peripheral | ESP32                                          |
+ * |:----------:|:-----------------------------------------------|
+ * | lcditse0803|            		                             |
+ * | HC-SR04    | GPIO_3                                         |
  *
  * @section changelog Changelog
  *
  * |   Date	    | Description                                    |
  * |:----------:|:-----------------------------------------------|
  * | 15/04/2024 | Inicio del proyecto		                     |
- * | 15/04/2024 | Documentacion del proyecto                     |
+ * | 30/04/2024 | Inicio de documentacion del proyecto           |
  *
  * @author Ever Colazo (everf97@live.com)
  *
@@ -29,24 +38,65 @@
 #include "timer_mcu.h"
 #include "uart_mcu.h"
 /*==================[macros and definitions]=================================*/
+/** @def REFRESCO_MEDICION 
+ * @brief Representa el tiempo en microsegundos que estará comandando el disparo del timer 
+ * que activa la tarea de medir
+ * 
+*/
 #define REFRESCO_MEDICION 1000000
+
+/** @def REFRESCO_DISPLAY
+ * @brief Representa el tiempo en microsegundos que estará comandando el disparo del timer 
+ * que activa la tarea de mostrar por display y control de Leds
+ * 
+*/
 #define REFRESCO_DISPLAY 1000000
 /*==================[internal data definition]===============================*/
+/**
+ * @def Medir_task_handle 
+ * @brief Objeto para el manejo de tarea medir
+*/
 TaskHandle_t Medir_task_handle = NULL;
+
+/**
+ * @def Mostrar_task_handle
+ * @brief Objeto para el manejo de tarea mostrar
+ * 
+*/
 TaskHandle_t Mostrar_task_handle = NULL;
+
+/**
+ * @def distancia 
+ * @brief Variable global entera sin signo que almacena la distancia medida por el sensor de ultrasonido
+*/
 uint16_t distancia = 0;
+
+/**
+ * @def hold
+ * @brief Variable global de tipo booleana que almacena el estado de "mantener" el último valor sensado
+*/
 bool hold;
+/**
+ * @def on
+ * @brief Variable global de tipo booleana que almacena el estado de encendido del sistema de medición
+*/
 bool on;
 
 /*==================[internal functions declaration]=========================*/
-
+/**
+ * @fn escribirDistanciaEnPc()
+ * @brief Permite mostrar por monitor serial la distancia sensada en tiempo real
+*/
 void escribirDistanciaEnPc()
 {
     UartSendString(UART_PC, "distancia ");
     UartSendString(UART_PC, (char *)UartItoa(distancia, 10));
     UartSendString(UART_PC, " cm\r\n");
 }
-
+/**
+ * @fn medirTask()
+ * @brief Tarea destinada a la realización de medir la distancia al sensor de ultrasonido
+*/
 static void medirTask()
 {
     while (true)
@@ -58,7 +108,11 @@ static void medirTask()
         }
     }
 }
-
+/**
+ * @fn mostrarTask()
+ * @brief Tarea destinada a la realización de encender LEDs en función de la distancia sensada además de mostrar 
+ * por LCD la distancia medida en el sensor.
+*/
 static void mostrarTask()
 {
     while (true)
@@ -102,17 +156,27 @@ static void mostrarTask()
         }
     }
 }
-
+/**
+ * @fn TeclaOn()
+ * @brief Cambia el estado de la bandera booleana On
+*/
 void TeclaOn()
 {
     on = !on;
 }
-
+/**
+ * @fn TeclaHold()
+ * @brief Cambia el estado de la bandera booleana Hold
+*/
 void TeclaHold()
 {
     on = !on;
 }
-
+/**
+ * @fn TeclaOnHold()
+ * @brief Cambia el estado de las banderas booleanas On y Hold en función de la entrada por conexión de puerto
+ * serie
+*/
 void TeclasOnHold()
 {
     uint8_t tecla;
@@ -128,12 +192,18 @@ void TeclasOnHold()
         break;
     }
 }
-
+/**
+ * @fn FuncTimerMedir()
+ * @brief Envía una notificación a la tarea medir
+*/
 void FuncTimerMedir()
 {
     vTaskNotifyGiveFromISR(Medir_task_handle, pdFALSE); /* Envía una notificación a la tarea asociada a medir*/
 }
-
+/**
+ * @fn FuncTimerMostrar()
+ * @brief Envía una notificación a la tarea mostrar
+*/
 void FuncTimerMostrar()
 {
     vTaskNotifyGiveFromISR(Mostrar_task_handle, pdFALSE); /* Envía una notificación a la tarea asociada al mostrar */
@@ -147,10 +217,9 @@ void app_main(void)
     LcdItsE0803Init();
     SwitchesInit();
 
-
-        serial_config_t ControlarUart =
+    serial_config_t ControlarUart =
         {
-            .port = UART_CONNECTOR,
+            .port = UART_PC,
             .baud_rate = 115200,
             .func_p = TeclasOnHold,
             .param_p = NULL,
