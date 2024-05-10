@@ -121,7 +121,10 @@ static void mostrarTask(void *pvParameter)
         vTaskDelay(REFRESCO_DISPLAY / portTICK_PERIOD_MS);
     }
 }
-
+/**
+ * @fn teclasTask()
+ * @brief Tarea dedicada a realizar el control de la aplicacion mediante las teclas que se detecten como pulsadas
+*/
 static void teclasTask(void *pvParameter)
 {
     uint8_t teclas;
