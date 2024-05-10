@@ -1,14 +1,15 @@
 /*! @mainpage Medidor de distancia por ultrasonido
  *
  * \section genDesc General Description
- *
- * This example makes LED_1, LED_2 and LED_3 blink at different rates, using FreeRTOS tasks.
+ *La aplicación muestra la distancia medida por un sensor de ultraosonido por un display LCD, mediante
+ la utilización de tareas 
  *
  * @section changelog Changelog
  *
  * |   Date	    | Description                                    |
  * |:----------:|:-----------------------------------------------|
- * | 10/04/2024 | Document creation		                         |
+ * | 10/04/2024 | Comienza el archivo                            |
+ * | 10/05/2024 | Finaliza la documentación del proyecto         |
  *
  * @author Ever Colazo (everf97@live.com)
  *
@@ -26,17 +27,43 @@
 #include "lcditse0803.h"
 #include "switch.h"
 /*==================[macros and definitions]=================================*/
+/** @def REFRESCO_TECLAS 
+ * @brief Representa el tiempo en microsegundos que se utilizará para dar un delay a la tarea teclas
+ * 
+*/
 #define REFRESCO_TECLAS 50
+
+/** @def REFRESCO_MEDICION 
+ * @brief Representa el tiempo en microsegundos que se utilizará para dar un delay a la tarea medir
+ * 
+*/
 #define REFRESCO_MEDICION 1000
+/** @def REFRESCO_DISPLAY 
+ * @brief Representa el tiempo en microsegundos que se utilizará para dar un delay a la tarea medir
+ * 
+*/
 #define REFRESCO_DISPLAY 100
 /*==================[internal data definition]===============================*/
+/**
+ * @def distancia 
+ * @brief Variable global entera sin signo que almacena la distancia medida por el sensor de ultrasonido
+*/
 uint16_t distancia = 0;
+
+/**
+ * @def hold
+ * @brief Variable global de tipo booleana que almacena el estado de "mantener" el último valor sensado
+*/
 bool hold;
+/**
+ * @def on
+ * @brief Variable global de tipo booleana que almacena el estado de encendido del sistema de medición
+*/
 bool on;
 
 /*==================[internal functions declaration]=========================*/
 
-static void medir(void *pvParameter)
+static void medirTask(void *pvParameter)
 { // en esta tarea se mide las distancias por el sensor y se modifica el estado de los leds dependiendo lo que se este midiendo
     while (true)
     {
@@ -118,7 +145,7 @@ void app_main(void)
     LcdItsE0803Init();
     SwitchesInit();
 
-    xTaskCreate(&medir, "medir", 512, NULL, 5, NULL);
+    xTaskCreate(&medirTask, "medir", 512, NULL, 5, NULL);
     xTaskCreate(&teclasTask, "mostrar", 512, NULL, 5, NULL);
     xTaskCreate(&mostarTask, "teclas", 512, NULL, 5, NULL);
 }
