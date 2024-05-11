@@ -30,21 +30,18 @@
 
 /** @def REFRESCO_TECLAS
  * @brief Representa el tiempo en microsegundos que se utilizará para dar un delay a la tarea teclas
- * @return
  * 
 */
 #define REFRESCO_TECLAS 50
 
 /** @def REFRESCO_MEDICION
  * @brief Representa el tiempo en microsegundos que se utilizará para dar un delay a la tarea medir
- * @return
  * 
 */
 #define REFRESCO_MEDICION 1000
 
 /** @def REFRESCO_DISPLAY
  * @brief Representa el tiempo en microsegundos que se utilizará para dar un delay a la tarea medir
- * @return
  * 
 */
 #define REFRESCO_DISPLAY 100
@@ -52,27 +49,23 @@
 /**
  * @def distancia
  * @brief Variable global entera sin signo que almacena la distancia medida por el sensor de ultrasonido
- * @return
 */
 uint16_t distancia = 0;
 
 /**
  * @def hold
  * @brief Variable global de tipo booleana que almacena el estado de "mantener" el último valor sensado
- * @return
 */
 bool hold;
 /**
  * @def on
  * @brief Variable global de tipo booleana que almacena el estado de encendido del sistema de medición
- * @return
 */
 bool on;
 
 /*==================[internal functions declaration]=========================*/
 /**
  * @brief Tarea que permite realizar las mediciones de distancia con el sensor de ultrasonido
- * @return
 */
 void medirTask()
 { // en esta tarea se mide las distancias por el sensor y se modifica el estado de los leds dependiendo lo que se este midiendo
@@ -85,11 +78,11 @@ void medirTask()
         vTaskDelay(REFRESCO_MEDICION / portTICK_PERIOD_MS);
     }
 }
+
 /**
  * @brief Tarea que permite realizar la visualización de los datos sensados por display y encender los LEDs
- * @return
 */
-static void mostrarTask()
+void mostrarTask()
 {
     while (true)
     {
@@ -134,9 +127,8 @@ static void mostrarTask()
 }
 /**
  * @brief Tarea que permite realizar el control de la aplicacion mediante las teclas que se detecten como pulsadas
- * @return
 */
-static void teclasTask()
+void teclasTask()
 {
     uint8_t teclas;
     while (true)
