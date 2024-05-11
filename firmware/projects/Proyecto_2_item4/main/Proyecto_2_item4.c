@@ -2,7 +2,7 @@
  *
  * \section genDesc General Description
  *
- * En este proyecto se 
+ * En este proyecto se trabaja sobre la conversion analogica-digital
  *
  * @section changelog Changelog
  *
@@ -30,9 +30,26 @@
 #define TIEMPO_CONVERSION_DA 4000
 #define BUFFER_SIZE 231
 /*==================[internal data definition]===============================*/
+/** 
+ * @def ConversorAD_task_handle 
+ * @brief 
+*/
 TaskHandle_t ConversorAD_task_handle = NULL;
+
+/** 
+ * @def ConversorDA_task_handle 
+ * @brief 
+*/
 TaskHandle_t ConversorDA_task_handle = NULL;
+/** 
+ * @def ValorAnalogico 
+ * @brief 
+*/
 uint16_t valorAnalogico = 0;
+/** 
+ * @def ecg 
+ * @brief 
+*/
 const char ecg[BUFFER_SIZE] = {
     76, 77, 78, 77, 79, 86, 81, 76, 84, 93, 85, 80,
     89, 95, 89, 85, 93, 98, 94, 88, 98, 105, 96, 91,
@@ -54,7 +71,10 @@ const char ecg[BUFFER_SIZE] = {
 };
 
 /*==================[internal functions declaration]=========================*/
-
+/** 
+ * @fn escribirValorEnPC() 
+ * @brief 
+*/
 void escribirValorEnPc()
 {
    // UartSendString(UART_PC, "valor ");
@@ -62,7 +82,10 @@ void escribirValorEnPc()
     UartSendString(UART_PC, "\r");
 }
 
-static void AD_conversor_task()
+/** 
+ * @brief 
+*/
+void AD_conversor_task()
 {
 
     while (true)
@@ -73,7 +96,10 @@ static void AD_conversor_task()
     }
 }
 
-static void DA_conversor_task()
+/** 
+ * @brief 
+*/
+void DA_conversor_task()
 {
     uint8_t i = 0;
     while (true)
@@ -88,12 +114,19 @@ static void DA_conversor_task()
         }
     }
 }
-
+/** 
+ * @fn FuncTimerConversionDA()
+ * @brief 
+*/
 void FuncTimerConversionDA()
 {
     vTaskNotifyGiveFromISR(ConversorDA_task_handle, pdFALSE);
 }
 
+/** 
+ * @fn FuncTimerConversionAD()
+ * @brief 
+*/
 void FuncTimerConversionAD()
 {
     vTaskNotifyGiveFromISR(ConversorAD_task_handle, pdFALSE);
