@@ -77,8 +77,10 @@ bool hold;
 bool on;
 
 /*==================[internal functions declaration]=========================*/
+
 /**
- * @fn FuncTimerMedir()
+ * @fn FuncTimerMedir(void *param)
+ * @param param parametro que no se utiliza
  * @brief Envía una notificación a la tarea medir
 */
 void FuncTimerMedir(void *param)
@@ -87,7 +89,8 @@ void FuncTimerMedir(void *param)
 }
 
 /**
- * @fn FuncTimerMostrar()
+ * @fn void FuncTimerMostrar(void *param)
+ * @param param parametro que no se utiliza
  * @brief Envía una notificación a la tarea mostrar
 */
 void FuncTimerMostrar(void *param)
@@ -96,10 +99,9 @@ void FuncTimerMostrar(void *param)
 }
 
 /**
- * @fn medirTask()
- * @brief Tarea dedicada a realizar las mediciones de distancia con el sensor de ultrasonido
+ * @brief Es un tarea dedicada a realizar las mediciones de distancia con el sensor de ultrasonido
 */
-static void medirTask()
+void medirTask()
 {
     while (true)
     {
@@ -112,11 +114,10 @@ static void medirTask()
 }
 
 /**
- * @fn mostrarTask()
- * @brief Tarea destinada a la realización de encender LEDs en función de la distancia sensada además de mostrar 
+ * @brief Es una tarea destinada a la realización de encender LEDs en función de la distancia sensada además de mostrar 
  * por LCD la distancia medida en el sensor.
 */
-static void mostrarTask()
+void mostrarTask()
 {
     while (true)
     {
