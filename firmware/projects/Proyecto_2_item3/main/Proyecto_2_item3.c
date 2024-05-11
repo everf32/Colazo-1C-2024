@@ -19,6 +19,7 @@
  * |:----------:|:-----------------------------------------------|
  * | 15/04/2024 | Inicio del proyecto		                     |
  * | 30/04/2024 | Inicio de documentacion del proyecto           |
+ * | 10/05/2024 | Fin de documentacion del proyecto              |
  *
  * @author Ever Colazo (everf97@live.com)
  *
@@ -94,10 +95,9 @@ void escribirDistanciaEnPc()
     UartSendString(UART_PC, " cm\r\n");
 }
 /**
- * @fn medirTask()
- * @brief Tarea destinada a la realización de medir la distancia al sensor de ultrasonido
+ * @brief medirTask es una tarea destinada a la realización de medir la distancia al sensor de ultrasonido
 */
-static void medirTask()
+void medirTask()
 {
     while (true)
     {
@@ -109,11 +109,10 @@ static void medirTask()
     }
 }
 /**
- * @fn mostrarTask()
- * @brief Tarea destinada a la realización de encender LEDs en función de la distancia sensada además de mostrar 
+ * @brief mostrarTask es un tarea destinada a la realización de encender LEDs en función de la distancia sensada además de mostrar 
  * por LCD la distancia medida en el sensor.
 */
-static void mostrarTask()
+void mostrarTask()
 {
     while (true)
     {
