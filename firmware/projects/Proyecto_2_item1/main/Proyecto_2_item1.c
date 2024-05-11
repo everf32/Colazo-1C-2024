@@ -71,10 +71,10 @@ bool on;
 
 /*==================[internal functions declaration]=========================*/
 /**
- * @brief medirTask permite realizar las mediciones de distancia con el sensor de ultrasonido
+ * @brief Tarea que permite realizar las mediciones de distancia con el sensor de ultrasonido
  * @return
 */
-static void medirTask()
+void medirTask()
 { // en esta tarea se mide las distancias por el sensor y se modifica el estado de los leds dependiendo lo que se este midiendo
     while (true)
     {
@@ -86,7 +86,7 @@ static void medirTask()
     }
 }
 /**
- * @brief mostrarTask permite realizar la visualización de los datos sensados por display y encender los LEDs
+ * @brief Tarea que permite realizar la visualización de los datos sensados por display y encender los LEDs
  * @return
 */
 static void mostrarTask()
@@ -133,7 +133,7 @@ static void mostrarTask()
     }
 }
 /**
- * @brief teclasTask permite realizar el control de la aplicacion mediante las teclas que se detecten como pulsadas
+ * @brief Tarea que permite realizar el control de la aplicacion mediante las teclas que se detecten como pulsadas
  * @return
 */
 static void teclasTask()
