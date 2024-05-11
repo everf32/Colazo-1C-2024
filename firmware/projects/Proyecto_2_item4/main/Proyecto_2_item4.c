@@ -28,27 +28,31 @@
 /*==================[macros and definitions]=================================*/
 #define TIEMPO_CONVERSION_AD 2000
 #define TIEMPO_CONVERSION_DA 4000
+/**
+ * @def BUFFER_SIZE 
+ * @brief Tamaño del vector que contiene los datos de un ECG
+*/
 #define BUFFER_SIZE 231
 /*==================[internal data definition]===============================*/
 /** 
  * @def ConversorAD_task_handle 
- * @brief 
+ * @brief elemento utilizado para manejar las tareas con interrupciones
 */
 TaskHandle_t ConversorAD_task_handle = NULL;
 
 /** 
  * @def ConversorDA_task_handle 
- * @brief 
+ * @brief elemento utilizado para manejar las tareas con interrupciones
 */
 TaskHandle_t ConversorDA_task_handle = NULL;
 /** 
  * @def ValorAnalogico 
- * @brief 
+ * @brief variable de tipo entero sin signo que almacenará el valor analógico leído
 */
 uint16_t valorAnalogico = 0;
 /** 
  * @def ecg 
- * @brief 
+ * @brief vector que contiene todos los datos necesario para levantar una señal de ECG
 */
 const char ecg[BUFFER_SIZE] = {
     76, 77, 78, 77, 79, 86, 81, 76, 84, 93, 85, 80,
@@ -73,7 +77,7 @@ const char ecg[BUFFER_SIZE] = {
 /*==================[internal functions declaration]=========================*/
 /** 
  * @fn escribirValorEnPC() 
- * @brief 
+ * @brief Permite la salida por monitor serie de los valores analógicos leídos
 */
 void escribirValorEnPc()
 {
@@ -83,7 +87,7 @@ void escribirValorEnPc()
 }
 
 /** 
- * @brief 
+ * @brief Tarea involucrada en la conversion AD
 */
 void AD_conversor_task()
 {
@@ -97,7 +101,7 @@ void AD_conversor_task()
 }
 
 /** 
- * @brief 
+ * @brief Tarea involucrada en la conversion DA 
 */
 void DA_conversor_task()
 {
@@ -116,7 +120,7 @@ void DA_conversor_task()
 }
 /** 
  * @fn FuncTimerConversionDA()
- * @brief 
+ * @brief Involucrada en enviar una notificación para poder continuar la tarea de conversion DA
 */
 void FuncTimerConversionDA()
 {
@@ -125,7 +129,7 @@ void FuncTimerConversionDA()
 
 /** 
  * @fn FuncTimerConversionAD()
- * @brief 
+ * @brief Involucrada en enviar una notificación para poder continuar la tarea de conversion AD
 */
 void FuncTimerConversionAD()
 {
