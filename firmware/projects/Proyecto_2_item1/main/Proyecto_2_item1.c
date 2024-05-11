@@ -27,46 +27,54 @@
 #include "lcditse0803.h"
 #include "switch.h"
 /*==================[macros and definitions]=================================*/
-/** @def REFRESCO_TECLAS 
+
+/** @def REFRESCO_TECLAS
  * @brief Representa el tiempo en microsegundos que se utilizará para dar un delay a la tarea teclas
+ * @return
  * 
 */
 #define REFRESCO_TECLAS 50
 
-/** @def REFRESCO_MEDICION 
+/** @def REFRESCO_MEDICION
  * @brief Representa el tiempo en microsegundos que se utilizará para dar un delay a la tarea medir
+ * @return
  * 
 */
 #define REFRESCO_MEDICION 1000
-/** @def REFRESCO_DISPLAY 
+
+/** @def REFRESCO_DISPLAY
  * @brief Representa el tiempo en microsegundos que se utilizará para dar un delay a la tarea medir
+ * @return
  * 
 */
 #define REFRESCO_DISPLAY 100
 /*==================[internal data definition]===============================*/
 /**
- * @def distancia 
+ * @def distancia
  * @brief Variable global entera sin signo que almacena la distancia medida por el sensor de ultrasonido
+ * @return
 */
 uint16_t distancia = 0;
 
 /**
  * @def hold
  * @brief Variable global de tipo booleana que almacena el estado de "mantener" el último valor sensado
+ * @return
 */
 bool hold;
 /**
  * @def on
  * @brief Variable global de tipo booleana que almacena el estado de encendido del sistema de medición
+ * @return
 */
 bool on;
 
 /*==================[internal functions declaration]=========================*/
 /**
- * @fn medirTask()
- * @brief Tarea dedicada a realizar las mediciones de distancia con el sensor de ultrasonido
+ * @brief medirTask permite realizar las mediciones de distancia con el sensor de ultrasonido
+ * @return
 */
-static void medirTask(void *pvParameter)
+static void medirTask()
 { // en esta tarea se mide las distancias por el sensor y se modifica el estado de los leds dependiendo lo que se este midiendo
     while (true)
     {
@@ -77,8 +85,11 @@ static void medirTask(void *pvParameter)
         vTaskDelay(REFRESCO_MEDICION / portTICK_PERIOD_MS);
     }
 }
-
-static void mostrarTask(void *pvParameter)
+/**
+ * @brief mostrarTask permite realizar la visualización de los datos sensados por display y encender los LEDs
+ * @return
+*/
+static void mostrarTask()
 {
     while (true)
     {
@@ -122,10 +133,10 @@ static void mostrarTask(void *pvParameter)
     }
 }
 /**
- * @fn teclasTask()
- * @brief Tarea dedicada a realizar el control de la aplicacion mediante las teclas que se detecten como pulsadas
+ * @brief teclasTask permite realizar el control de la aplicacion mediante las teclas que se detecten como pulsadas
+ * @return
 */
-static void teclasTask(void *pvParameter)
+static void teclasTask()
 {
     uint8_t teclas;
     while (true)
