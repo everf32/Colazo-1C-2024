@@ -41,6 +41,7 @@ typedef struct {
 	void *func_p;			/*!< Pointer to callback function to call when receiving data (= UART_NO_INT if not requiered)*/
 	void *param_p;			/*!< Pointer to callback function parameters */
 } serial_config_t;
+
 /*==================[external data declaration]==============================*/
 
 /*==================[external functions declaration]=========================*/
