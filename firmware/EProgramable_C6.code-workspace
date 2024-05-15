@@ -1,25 +1,52 @@
 {
     "folders": [
         {
-            "path": "./drivers"
+            "name": "drivers",
+            "path": "drivers"
         },
         {
-            "path": "./projects/0_blinking"
+            "name": "0_blinking",
+            "path": "projects/0_blinking"
         },
         {
-            "path": "./projects/1_blinking_switch"
+            "name": "1_blinking_switch",
+            "path": "projects/1_blinking_switch"
         },
         {
+            "name": "2_blinking_tasks",
             "path": "projects/2_blinking_tasks"
         },
         {
-            "path": "./projects/x_template"
+            "name": "x_template",
+            "path": "projects/x_template"
         },
         {
+            "name": "Proyecto1_Item3",
             "path": "projects/Proyecto1_Item3"
         },
         {
+            "name": "Proyecto1_item4",
             "path": "projects/Proyecto1_item4"
+        },
+        {
+            "name": "Proyecto_2_item1",
+            "path": "projects/Proyecto_2_item1"
+        },
+        {
+            "name": "Proyecto_2_item2",
+            "path": "projects/Proyecto_2_item2"
+        },
+        {
+            "name": "Proyecto_2_item3",
+            "path": "projects/Proyecto_2_item3"
+        },
+        {
+            "name": "Proyecto_2_item4",
+            "path": "projects/Proyecto_2_item4"
+        },
+        {
+            "name": "Proyecto_Integrador_Colazo",
+            "path": "projects/Proyecto_Integrador_Colazo"
         }
     ],
     "settings": {
@@ -74,7 +101,9 @@
             "ili9341.h": "c",
             "soc_caps.h": "c",
             "mpu6050.h": "c",
-            "i2c_mcu.h": "c"
+            "i2c_mcu.h": "c",
+            "ws2812b.h": "c",
+            "ble_mcu.h": "c"
         },
     },
     "tasks": {
