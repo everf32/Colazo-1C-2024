@@ -47,7 +47,7 @@ bool On;
 
 /*==================[internal functions declaration]=========================*/
 
-void readData(uint8_t *data, uint8_t length)
+void leerDato(uint8_t *dato, uint8_t tamanio)
 {
 }
 
@@ -78,7 +78,7 @@ void app_main(void)
 
 	ble_config_t ble_configuration = {
 		.device_name = "ESP_EDU_1",
-		.func_p = readData};
+		.func_p = leerDato};
 		
 	/*
 		timer_config_t timer_senial = {
