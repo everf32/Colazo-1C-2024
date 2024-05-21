@@ -37,35 +37,67 @@
 #include <analog_io_mcu.h>
 
 /*==================[macros and definitions]=================================*/
+#define PERIOD 100
 
 /*==================[internal data definition]===============================*/
 TaskHandle_t conversorAD_task_handle = NULL;
 TaskHandle_t comparar_task_handle = NULL;
 TaskHandle_t mostrar_task_handle = NULL;
 TaskHandle_t procesar_task_handle = NULL;
+
 bool On;
 
 /*==================[internal functions declaration]=========================*/
 
 void leerDato(uint8_t *dato, uint8_t tamanio)
 {
+	// funcion encargada de registrar los datos que se reciben por bluetooth
+}
+
+void FuncTimerProcesar()
+{
+	vTaskNotifyGiveFromISR(procesar_task_handle,pdFALSE);
+}
+
+void FuncTimerMostrar()
+{
+vTaskNotifyGiveFromISR(mostrar_task_handle,pdFALSE);
+}
+
+void FuncTimerConversorAD()
+{
+	vTaskNotifyGiveFromISR(comparar_task_handle,pdFALSE);
+}
+void FuncTimerComparar()
+{
+	vTaskNotifyGiveFromISR(conversorAD_task_handle,pdFALSE);
 }
 
 void ProcesarTask()
 {
+	while(true)
+	{
 	// tarea encargada de aplicar diferentes procesamientos a las señales de entrada: temperatura,humedad, luz
+	}
 }
 
 void compararTask()
 {
+	while(true)
+	{
 	/* tarea encargada de comparar valores actuales de temperatura, humedad y luz versus diferentes valores umbrales
 	ya seteados
 	*/
+	}
 }
 
 void mostrarTask()
 {
-	// tarea encargada de encender la tira led para el valor de temperatura
+	while(true)
+	{
+// tarea encargada de encender la tira led para el valor de temperatura
+	}
+	
 }
 
 void conversorADTask()
@@ -79,33 +111,42 @@ void app_main(void)
 	ble_config_t ble_configuration = {
 		.device_name = "ESP_EDU_1",
 		.func_p = leerDato};
-		
+
+	
+		timer_config_t ProcesarTask = {
+			.timer = TIMER_A,
+			.period = PERIOD,
+			.func_p = FuncTimerProcesar,
+			.param_p = NULL};
+
+		timer_config_t compararTask = {
+			.timer = TIMER_B,
+			.period = PERIOD,
+			.func_p = FuncTimerComparar,
+			.param_p = NULL};
+
+		timer_config_t conversorADTask = {
+			.timer = TIMER_C,
+			.period = PERIOD,
+			.func_p = FuncTimerConversorAD,
+			.param_p = NULL};
+
+			timer_config_t mostrarTaskTask = {
+			.timer = TIMER_D,
+			.period = PERIOD,
+			.func_p = FuncTimerMostrar,
+			.param_p = NULL};
+	
+	
+
+	/*--------------------Inicializacion--------------------*/
 	/*
-		timer_config_t timer_senial = {
-			.timer = TIMER_B,
-			.period = T_SENIAL * CHUNK,
-			.func_p = FuncTimerSenial,
-			.param_p = NULL};
 
-		timer_config_t timer_senial = {
-			.timer = TIMER_B,
-			.period = T_SENIAL * CHUNK,
-			.func_p = FuncTimerSenial,
-			.param_p = NULL};
-
-		timer_config_t timer_senial = {
-			.timer = TIMER_B,
-			.period = T_SENIAL * CHUNK,
-			.func_p = FuncTimerSenial,
-			.param_p = NULL};
-
-	*/
-	// Inicializacion
-	/*
 		NeoPixelInit(BUILT_IN_RGB_LED_PIN, BUILT_IN_RGB_LED_LENGTH, &color);
 		NeoPixelAllOff();
-		BleInit(&ble_configuration);
+
 	*/
+	BleInit(&ble_configuration);
 
 	/*creacion de tareas*/
 	xTaskCreate(&ProcesarTask, "procesar", 512, NULL, 5, &procesar_task_handle);
