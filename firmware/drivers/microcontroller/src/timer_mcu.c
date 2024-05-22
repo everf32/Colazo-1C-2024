@@ -21,7 +21,6 @@
 gptimer_handle_t timer_a = NULL;		/*!<  */
 gptimer_handle_t timer_b = NULL;		/*!<  */
 gptimer_handle_t timer_c = NULL;		/*!<  */
-gptimer_handle_t timer_d = NULL;
 const gptimer_config_t timer_config = {
 	.clk_src = GPTIMER_CLK_SRC_DEFAULT,	/*!<  */
 	.direction = GPTIMER_COUNT_UP,		/*!<  */
@@ -30,11 +29,9 @@ const gptimer_config_t timer_config = {
 void (*timer_a_isr_p)(void*);	/*!<  */
 void (*timer_b_isr_p)(void*);	/*!<  */
 void (*timer_c_isr_p)(void*);	/*!<  */
-void (*timer_d_isr_p)(void*);	/*!<  */
 void *timer_a_user_data;	/*!<  */
 void *timer_b_user_data;	/*!<  */
 void *timer_c_user_data;	/*!<  */
-void *timer_d_user_data;	/*!<  */
 /*==================[internal functions declaration]=========================*/
 static bool IRAM_ATTR timer_a_isr(gptimer_handle_t timer, const gptimer_alarm_event_data_t *edata, void *user_data){
 	timer_a_isr_p(timer_a_user_data);
@@ -46,10 +43,6 @@ static bool IRAM_ATTR timer_b_isr(gptimer_handle_t timer, const gptimer_alarm_ev
 }
 static bool IRAM_ATTR timer_c_isr(gptimer_handle_t timer, const gptimer_alarm_event_data_t *edata, void *user_data){
 	timer_c_isr_p(timer_c_user_data);
-	return true;
-}
-static bool IRAM_ATTR timer_d_isr(gptimer_handle_t timer, const gptimer_alarm_event_data_t *edata, void *user_data){
-	timer_d_isr_p(timer_d_user_data);
 	return true;
 }
 /*==================[internal data definition]===============================*/
@@ -111,23 +104,6 @@ void TimerInit(timer_config_t *timer_ini){
 			gptimer_register_event_callbacks(timer_c, &alarm_c, NULL);
 			gptimer_enable(timer_c);
 	 	break;
-
-		case TIMER_D:
-			timer_d_isr_p = timer_ini->func_p;
-			timer_d_user_data = timer_ini->param_p;
-	 		gptimer_new_timer(&timer_config, &timer_d);
-			gptimer_alarm_config_t alarm_config_d = {
-				.alarm_count = timer_ini->period, 
-				.reload_count = RESET_COUNT_VALUE,
-				.flags.auto_reload_on_alarm = true,
-			};
-			gptimer_set_alarm_action(timer_d, &alarm_config_d);
-			gptimer_event_callbacks_t alarm_d = {
-				.on_alarm = timer_d_isr,
-			};
-			gptimer_register_event_callbacks(timer_d, &alarm_d, NULL);
-			gptimer_enable(timer_d);
-	 	break;
 	}
 }
 
@@ -141,9 +117,6 @@ void TimerStart(timer_mcu_t timer){
 		break;
 	 	case TIMER_C:
 	 		gptimer_start(timer_c);
-		break;
-		case TIMER_D:
-	 		gptimer_start(timer_d);
 		break;
 	}
 }
@@ -159,9 +132,6 @@ void TimerStop(timer_mcu_t timer){
 	 	case TIMER_C:
 	 		gptimer_stop(timer_c);
 	 	break;
-		case TIMER_D:
-	 		gptimer_stop(timer_d);
-	 	break;
 	}
 }
 
@@ -175,9 +145,6 @@ void TimerReset(timer_mcu_t timer){
 	 	break;
 	 	case TIMER_C:
 			gptimer_set_raw_count(timer_c, RESET_COUNT_VALUE);
-	 	break;
-		case TIMER_D:
-			gptimer_set_raw_count(timer_d, RESET_COUNT_VALUE);
 	 	break;
 	}
 }

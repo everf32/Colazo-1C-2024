@@ -31,8 +31,7 @@
 typedef enum timers {
 	TIMER_A,					/*!< Timer A */
 	TIMER_B,					/*!< Timer B */
-	TIMER_C,                    /*!< Timer C */
-	TIMER_D						/*!< Timer D */
+	TIMER_C						/*!< Timer C */
 } timer_mcu_t;
 /**
  * @brief Timer configuration struct
