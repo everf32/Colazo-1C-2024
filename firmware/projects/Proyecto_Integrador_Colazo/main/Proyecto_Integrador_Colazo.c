@@ -40,30 +40,31 @@
 #include "stdbool.h"
 
 /*==================[macros and definitions]=================================*/
-#define PERIODA 100
-#define PERIODB 200
-#define PERIODC 300
-#define PERIODD 4000000
-#define NUMERO_NEO_PIXEL 8
+#define PERIODA 5000000
+#define PERIODB 4000000
+#define NUMERO_TIRA_PIXEL 8
 #define PIN_NEO_PIXEL GPIO_9
-#define UPPER_THRESHOLD 8.0		   // Umbral superior para temperatura
-#define LOWER_THRESHOLD 2.0		   // Umbral inferior para temperatura
-#define LIGHT_UPPER_THRESHOLD 3000 // Umbral superior para la luz (valor ADC), del umbral inferior no hago uso
+#define UPPER_THRESHOLD 8.0 // Umbral superior para temperatura
+#define LOWER_THRESHOLD 2.0 // Umbral inferior para temperatura
 
 /*==================[internal data definition]===============================*/
-TaskHandle_t conversorAD_task_handle = NULL;
 TaskHandle_t comparar_task_handle = NULL;
 TaskHandle_t mostrar_task_handle = NULL;
 TaskHandle_t procesar_task_handle = NULL;
 TaskHandle_t medir_task_handle = NULL;
-float temperature;
+float temperatura;
 static neopixel_color_t TiraLed[8];
-// uint8_t temperatures[10] = {5, 6, 4, 7, 2, 5, 3, 4, 5, 2};
-uint16_t light_Level = 0;
-float humidity;
-bool Encendido = true;
-uint8_t indice = 0;
-uint8_t control = 0;
+uint16_t nivel_luz = 0;
+float humedad;
+bool Encendido = false;
+bool maximo_minimo_promedio = false;
+float promedio_temperatura = 0;
+float promedio_humedad = 0;
+float maximo_temperatura = 0;
+float minimo_temperatura = 0;
+float acumulador_temperatura = 0;
+float acumulador_humedad = 0;
+uint8_t contador_medicion = 0;
 
 /*==================[internal functions declaration]=========================*/
 
@@ -73,17 +74,26 @@ void leerDato(uint8_t *dato)
 	{
 	case 'A':
 		Encendido = true;
+		contador_medicion = 0;
+		promedio_temperatura = 0;
+		promedio_humedad = 0;
+		maximo_temperatura = 0;
+		minimo_temperatura = 0;
+		acumulador_temperatura = 0;
+		acumulador_humedad = 0;
 		break;
 
 	case 'a':
 		Encendido = false;
+	
 		break;
+
+	case 'B':
+		maximo_minimo_promedio = true;
+
+	case 'b':
+		maximo_minimo_promedio = false;
 	}
-}
-/*
-void FuncTimerProcesar()
-{
-	vTaskNotifyGiveFromISR(procesar_task_handle, pdFALSE);
 }
 
 void FuncTimerMostrar()
@@ -91,46 +101,67 @@ void FuncTimerMostrar()
 	vTaskNotifyGiveFromISR(mostrar_task_handle, pdFALSE);
 }
 
-void FuncTimerConversorAD()
-{
-	vTaskNotifyGiveFromISR(comparar_task_handle, pdFALSE);
-}
-void FuncTimerComparar()
-{
-	vTaskNotifyGiveFromISR(comparar_task_handle, pdFALSE);
-}
-*/
-void FuncTimerMedir()
+void FuncTimerMedir_Comparar_Procesar()
 {
 	vTaskNotifyGiveFromISR(medir_task_handle, pdFALSE);
 	vTaskNotifyGiveFromISR(comparar_task_handle, pdFALSE);
+	vTaskNotifyGiveFromISR(procesar_task_handle, pdFALSE);
 }
 
 void ProcesarTask()
 {
+	char msg4[25];
+	char auxmsg4[10];
+	char msg5[25];
+	char auxmsg5[10];
+
+	//  tarea encargada de aplicar diferentes procesamientos a las señales de entrada: temperatura,humedad, luz
+	//  aca para el promedio de los datos puedo usar el estado de apagado, para luego de tocar en el celular para apagar
+	//  y que no mida mas usar esos datos almacenados en un vector(definir tamaño) para calcular el promedio
+	//  directamente acumular todos los valores en una variable
+
 	while (true)
 	{
 		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-		// tarea encargada de aplicar diferentes procesamientos a las señales de entrada: temperatura,humedad, luz
+		/*
+				if (!maximo_minimo_promedio)
+				{
+					if (maximo_temperatura < temperatura)
+					{
+						maximo_temperatura = temperatura;
+					}
+					if (minimo_temperatura > temperatura)
+					{
+						minimo_temperatura = temperatura;
+					}
+				}
+		*/
+		if (!Encendido)
+		{
+			promedio_temperatura = (acumulador_temperatura / contador_medicion);
+			promedio_humedad = (acumulador_humedad / contador_medicion);
+			strcpy(msg4, "");
+			sprintf(auxmsg4, "*J%.2f\n*", promedio_temperatura);
+			strcat(msg4, auxmsg4);
+			BleSendString(msg4);
+			// enviar luz por bluetooth
+			strcpy(msg5, "");
+			sprintf(auxmsg5, "*j %.2f\n*", promedio_humedad);
+			strcat(msg5, auxmsg5);
+			BleSendString(msg5);
+
+			printf("Temperatura promedio %.2f \n", promedio_temperatura);
+			printf("Humedad promedio %.2f \n", promedio_humedad);
+			printf("Temperatura maxima %.2f \n", maximo_temperatura);
+			printf("Temperatura minima %.2f \n", minimo_temperatura);
+		}
 	}
+
+	// controlar bien como mandar un mensaje solo, que no se repita en la misma tarea los mismo, si no voy a mandar
+	// siempre el promedio
 }
 
 void mostrarTask()
-{
-	while (true)
-	{
-		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-		// tarea encargada de encender la tira led para el valor de temperatura
-	}
-}
-
-void conversorADTask()
-{
-	ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-	// tarea dedicada a convertir los datos de temperatura y luz de analogico a digital
-}
-
-void medirTask()
 {
 	char msg1[25];
 	char auxmsg1[10];
@@ -138,51 +169,77 @@ void medirTask()
 	char auxmsg2[10];
 	char msg3[25];
 	char auxmsg3[10];
-	char msg4[25];
-	char auxmsg4[10];
+	neopixel_color_t arreglo_colores[8] = {NEOPIXEL_COLOR_RED, NEOPIXEL_COLOR_ORANGE, NEOPIXEL_COLOR_YELLOW,
+										   NEOPIXEL_HUE_MAGENTA, NEOPIXEL_COLOR_TURQUOISE, NEOPIXEL_COLOR_CYAN, NEOPIXEL_COLOR_LGREEN, NEOPIXEL_COLOR_GREEN};
+	uint8_t brillo_tira_led = 100;
+
+	while (true)
+	{
+		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+		if (Encendido)
+		{
+			// tarea encargada de encender la tira led para el valor de temperatura
+			// en otra tarea deberia tener funciones que apagan los leds de la tira conforme baja cierto nivel de temperatura y sube, tengo que
+			//  calcular las divisiones de cada aumento
+			NeoPixelBrightness(brillo_tira_led);
+			NeoPixelSetArray(arreglo_colores);
+
+			/*----------------Envio los datos medidos por bluetooth-----------------*/
+			strcpy(msg1, "");
+			sprintf(auxmsg1, "*T%.2f\n*", temperatura);
+			strcat(msg1, auxmsg1);
+			BleSendString(msg1);
+
+			// enviar humedad por bluetooth
+			strcpy(msg2, "");
+			sprintf(auxmsg2, "*H%.2f%%\n*", humedad);
+			strcat(msg2, auxmsg2);
+			BleSendString(msg2);
+
+			// enviar luz por bluetooth
+			strcpy(msg3, "");
+			sprintf(auxmsg3, "*L%u\n*", nivel_luz);
+			strcat(msg3, auxmsg3);
+			BleSendString(msg3);
+		}
+		else
+		{
+			NeoPixelAllOff();
+		}
+	}
+}
+
+void medirTask()
+{
 	while (true)
 	{
 		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
 		if (Encendido)
 		{
 			//--------------Medicion de luz-----------------
-			AnalogInputReadSingle(CH0, &light_Level);
+			AnalogInputReadSingle(CH0, &nivel_luz);
 			//----------Medicion de temperatura-------------
-			temperature = Si7007MeasureTemperature();
+			temperatura = Si7007MeasureTemperature();
+			acumulador_temperatura += temperatura;
+			if (maximo_temperatura < temperatura)
+			{
+				maximo_temperatura = temperatura;
+			}
+			if (minimo_temperatura > temperatura)
+			{
+				minimo_temperatura = temperatura;
+			}
 			//-------------Medicion de humedad--------------
-			humidity = Si7007MeasureHumidity();
-			// enviar temperatura por bluetooth
-			strcpy(msg1, "");
-			sprintf(auxmsg1, "*T%.2f\n*", temperature);
-			strcat(msg1, auxmsg1);
-			BleSendString(msg1);
-			// enviar humedad por bluetooth
-			strcpy(msg2, "");
-			sprintf(auxmsg2, "*H%.2f%%\n*", humidity);
-			strcat(msg2, auxmsg2);
-			BleSendString(msg2);
-			// enviar luz por bluetooth
-			strcpy(msg3, "");
-			sprintf(auxmsg3, "*L%u\n*", light_Level);
-			strcat(msg3, auxmsg3);
-			BleSendString(msg3);
+			humedad = Si7007MeasureHumidity();
 
-			// para mandar los datos de temperatura a una grafica en el celular
-			strcpy(msg4, "");
-			sprintf(auxmsg4, "*G%.2f\n*", temperature);
-			strcat(msg4, auxmsg4);
-			BleSendString(msg4);
-
-			printf("Temperatura: %.2f %%°C \n humedad: %.2f %%\n luz: %u\n", temperature, humidity, light_Level);
+			acumulador_humedad += humedad;
+			contador_medicion += 1;
 		}
-		else
-			printf("Sistema apagado no mido \n");
 	}
 }
 
 void compararTask()
 {
-
 	while (true)
 	{
 		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
@@ -190,36 +247,30 @@ void compararTask()
 		{
 			// tarea encargada de comparar valores actuales de temperatura, humedad y luz versus diferentes valores umbrales
 			// ya seteados
-			if (temperature < 23)
-			// if ((temperature < 8 && temperature > 2) && (humidity < 30) && light_Level)
+			if (temperatura < 23)
 			{
 				// Apagar el buzzer
 				BuzzerOff();
-			
 			}
-			// else if ((temperature < 2 || temperature > 8) && (humidity > 30) && light_Level)
-			if (temperature > 23)
+			if (temperatura > 23)
 			{
 				// Encender buzzer
 				BuzzerOn();
-
-				NeoPixelRainbow(NEOPIXEL_HUE_RED,254,254,1);
-				
 			}
-
-			// if (lightLevel > LIGHT_UPPER_THRESHOLD || lightLevel < LIGHT_LOWER_THRESHOLD) {
-			//  Acciones específicas para la luz
+			// falta definir como interpretar la luz que mide el ldr, capaz que  haya que aplicarle algun procesamiento a la señal que entra
 		}
 	}
 }
 
-/*==================[external functions definition]==========================*/
+/*====================[external functions definition]==========================*/
 void app_main(void)
 {
-	
+	/*------------------Definición de objeto bluetooth--------------------*/
 	ble_config_t ble_config = {
 		.device_name = "Seguridad de vacunas",
 		.func_p = leerDato};
+
+	/*------------------Definición de sensor temperatura humedad--------------------*/
 
 	Si7007_config medidorTemp_Hum = {
 		.select = GPIO_3,
@@ -233,59 +284,37 @@ void app_main(void)
 		.param_p = NULL,
 		.sample_frec = 0};
 
-		
-	/*
-			timer_config_t timerProcesar = {
-				.timer = TIMER_A,
-				.period = PERIODA,
-				.func_p = FuncTimerProcesar,
-				.param_p = NULL};
+	/*--------------------Definicion de timers---------------------*/
 
-			timer_config_t timerComparar = {
-				.timer = TIMER_B,
-				.period = PERIODB,
-				.func_p = FuncTimerComparar,
-				.param_p = NULL};
+	timer_config_t TimerMostrar = {
+		.timer = TIMER_B,
+		.period = PERIODA,
+		.func_p = FuncTimerMostrar,
+		.param_p = NULL};
 
-			timer_config_t timerConversorAD = {
-				.timer = TIMER_C,
-				.period = PERIODC,
-				.func_p = FuncTimerConversorAD,
-				.param_p = NULL};
-
-			timer_config_t TimerMostrar = {
-				.timer = TIMER_D,
-				.period = PERIODD,
-				.func_p = FuncTimerMostrar,
-				.param_p = NULL};
-		*/
-	timer_config_t TimerMedir = {
-		.timer = TIMER_A,
-		.period = PERIODD,
-		.func_p = FuncTimerMedir,
+	timer_config_t TimerMedir_Comparar = {
+		.timer = TIMER_C,
+		.period = PERIODB,
+		.func_p = FuncTimerMedir_Comparar_Procesar,
 		.param_p = NULL};
 
 	/*--------------------Inicializacion de dispositivos---------------------*/
 	BleInit(&ble_config);
 	AnalogInputInit(&entrada_analogica);
 	Si7007Init(&medidorTemp_Hum);
-	TimerInit(&TimerMedir);
-	LedsInit();
-	BuzzerInit(GPIO_16);
-	NeoPixelInit(PIN_NEO_PIXEL, NUMERO_NEO_PIXEL, &TiraLed);
-	NeoPixelAllOff();
-	/*creacion de tareas*/
-	// xTaskCreate(&ProcesarTask, "procesar", 512, NULL, 5, &procesar_task_handle);
-	// xTaskCreate(&mostrarTask, "mostrar", 512, NULL, 5, &mostrar_task_handle);
-	// xTaskCreate(&conversorADTask, "conversor", 512, NULL, 5, &conversorAD_task_handle);
+	TimerInit(&TimerMedir_Comparar);
+	TimerInit(&TimerMostrar);
+	BuzzerInit(GPIO_18);
+	NeoPixelInit(PIN_NEO_PIXEL, NUMERO_TIRA_PIXEL, &TiraLed);
+
+	/*-------------------------creacion de tareas----------------------------*/
+	xTaskCreate(&ProcesarTask, "procesar", 4096, NULL, 5, &procesar_task_handle);
+	xTaskCreate(&mostrarTask, "mostrar", 2048, NULL, 5, &mostrar_task_handle);
 	xTaskCreate(&compararTask, "comparar", 4096, NULL, 5, &comparar_task_handle);
 	xTaskCreate(&medirTask, "medir", 4096, NULL, 5, &medir_task_handle);
 
-	/*Inicialización de timers*/
-	// TimerStart(timerComparar.timer);
-	// TimerStart(TimerMostrar.timer);
-	// TimerStart(timerConversorAD.timer);
-	// TimerStart(timerProcesar.timer);
-	TimerStart(TimerMedir.timer);
+	/*-----------------------Inicialización de timers------------------------*/
+	TimerStart(TimerMostrar.timer);
+	TimerStart(TimerMedir_Comparar.timer);
 }
 /*==================[end of file]============================================*/
