@@ -126,7 +126,6 @@ void FuncTimerConversionDA()
 {
     vTaskNotifyGiveFromISR(ConversorDA_task_handle, pdFALSE);
 }
-
 /** 
  * @fn FuncTimerConversionAD()
  * @brief Involucrada en enviar una notificación para poder continuar la tarea de conversion AD
