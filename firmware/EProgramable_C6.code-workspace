@@ -103,7 +103,8 @@
             "mpu6050.h": "c",
             "i2c_mcu.h": "c",
             "ws2812b.h": "c",
-            "ble_mcu.h": "c"
+            "ble_mcu.h": "c",
+            "si7007.h": "c"
         },
     },
     "tasks": {
