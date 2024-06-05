@@ -54,7 +54,6 @@
 
 /*==================[inclusions]=============================================*/
 #include "Si7007.h"
-
 #include "gpio_mcu.h"
 #include <stdio.h>
 #include <stdint.h>
