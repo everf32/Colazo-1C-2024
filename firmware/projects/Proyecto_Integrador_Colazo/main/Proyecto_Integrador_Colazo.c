@@ -48,16 +48,51 @@
 #define LOWER_THRESHOLD 2.0 // Umbral inferior para temperatura
 
 /*==================[internal data definition]===============================*/
+/**
+ * @brief variable de tipo TaskHandle_t que se utiliza para manejar la tarea comparar.
+ * 
+*/
 TaskHandle_t comparar_task_handle = NULL;
+/**
+ * @brief variable de tipo TaskHandle_t que se utiliza para manejar la tarea mostrar.
+ * 
+*/
 TaskHandle_t mostrar_task_handle = NULL;
+/**
+ * @brief variable de tipo TaskHandle_t que se utiliza para manejar la tarea procesar.
+ * 
+*/
 TaskHandle_t procesar_task_handle = NULL;
+/**
+ * @brief variable de tipo TaskHandle_t que se utiliza para manejar la tarea medir.
+ * 
+*/
 TaskHandle_t medir_task_handle = NULL;
+/**
+ * @brief Variable utilizada para almacenar en tiempo real la temperatura medida.
+ * 
+*/
 float temperatura;
+/**
+ * @brief Variable de tipo neopixel_color_t que representa un arreglo de 8 leds en una tira.
+ * 
+*/
 static neopixel_color_t TiraLed[8];
+/**
+ * @brief Variable utilizada para almacenar en tiempo real el nivel de luz medida.
+ * 
+*/
 uint16_t nivel_luz = 0;
+/**
+ * @brief Variable utilizada para almacenar en tiempo real la humedad recibido.
+ * 
+*/
 float humedad;
+/**
+ * @brief Variable booleana que representa el estado del sistema de monitoreo.
+ * 
+*/
 bool Encendido = false;
-bool maximo_minimo_promedio = false;
 float promedio_temperatura = 0;
 float promedio_humedad = 0;
 float maximo_temperatura = 0;
@@ -67,6 +102,14 @@ float acumulador_humedad = 0;
 uint8_t contador_medicion = 0;
 
 /*==================[internal functions declaration]=========================*/
+
+/**
+ * @fn void leerDato(uint8_t *dato)
+ * @brief Función encargada de recibir los datos provenientes de la conexión bluetooth de baja energía(ble).
+ * @param dato 
+ * @brief Dato recibido mediante la conexión bluetooth de baja energía(ble).
+ * 
+*/
 
 void leerDato(uint8_t *dato)
 {
@@ -85,21 +128,26 @@ void leerDato(uint8_t *dato)
 
 	case 'a':
 		Encendido = false;
-	
+
 		break;
-
-	case 'B':
-		maximo_minimo_promedio = true;
-
-	case 'b':
-		maximo_minimo_promedio = false;
 	}
 }
 
+/**
+ * @fn void FuncTimerMostrar()
+ * @brief función encargada de enviar una notificación a las tareas de mostrar para que 
+ * retomen su funcionamiento
+*/
 void FuncTimerMostrar()
 {
 	vTaskNotifyGiveFromISR(mostrar_task_handle, pdFALSE);
 }
+
+/**
+ * @fn void FuncTimerMedir_Comparar_Procesar()
+ * @brief función encargada de enviar una notificación a las tareas de medir, comparar y procesar para que 
+ * retomen su funcionamiento
+*/
 
 void FuncTimerMedir_Comparar_Procesar()
 {
@@ -108,58 +156,10 @@ void FuncTimerMedir_Comparar_Procesar()
 	vTaskNotifyGiveFromISR(procesar_task_handle, pdFALSE);
 }
 
-void ProcesarTask()
-{
-	char msg4[25];
-	char auxmsg4[10];
-	char msg5[25];
-	char auxmsg5[10];
-
-	//  tarea encargada de aplicar diferentes procesamientos a las señales de entrada: temperatura,humedad, luz
-	//  aca para el promedio de los datos puedo usar el estado de apagado, para luego de tocar en el celular para apagar
-	//  y que no mida mas usar esos datos almacenados en un vector(definir tamaño) para calcular el promedio
-	//  directamente acumular todos los valores en una variable
-
-	while (true)
-	{
-		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-		/*
-				if (!maximo_minimo_promedio)
-				{
-					if (maximo_temperatura < temperatura)
-					{
-						maximo_temperatura = temperatura;
-					}
-					if (minimo_temperatura > temperatura)
-					{
-						minimo_temperatura = temperatura;
-					}
-				}
-		*/
-		if (!Encendido)
-		{
-			promedio_temperatura = (acumulador_temperatura / contador_medicion);
-			promedio_humedad = (acumulador_humedad / contador_medicion);
-			strcpy(msg4, "");
-			sprintf(auxmsg4, "*J%.2f\n*", promedio_temperatura);
-			strcat(msg4, auxmsg4);
-			BleSendString(msg4);
-			// enviar luz por bluetooth
-			strcpy(msg5, "");
-			sprintf(auxmsg5, "*j %.2f\n*", promedio_humedad);
-			strcat(msg5, auxmsg5);
-			BleSendString(msg5);
-
-			printf("Temperatura promedio %.2f \n", promedio_temperatura);
-			printf("Humedad promedio %.2f \n", promedio_humedad);
-			printf("Temperatura maxima %.2f \n", maximo_temperatura);
-			printf("Temperatura minima %.2f \n", minimo_temperatura);
-		}
-	}
-
-	// controlar bien como mandar un mensaje solo, que no se repita en la misma tarea los mismo, si no voy a mandar
-	// siempre el promedio
-}
+/**
+ * @brief Tarea encargada de mostrar los valores medidos de temperatura, humedad y luz, además de promedios, máximos
+ * y mínimos cuando sean requeridos y de encender la tira led que indica estado de temperatura
+*/
 
 void mostrarTask()
 {
@@ -209,6 +209,10 @@ void mostrarTask()
 	}
 }
 
+/**
+ * @brief Tarea encargada de medir las distintas variables, como temperatura, humedad y luz.
+*/
+
 void medirTask()
 {
 	while (true)
@@ -221,14 +225,6 @@ void medirTask()
 			//----------Medicion de temperatura-------------
 			temperatura = Si7007MeasureTemperature();
 			acumulador_temperatura += temperatura;
-			if (maximo_temperatura < temperatura)
-			{
-				maximo_temperatura = temperatura;
-			}
-			if (minimo_temperatura > temperatura)
-			{
-				minimo_temperatura = temperatura;
-			}
 			//-------------Medicion de humedad--------------
 			humedad = Si7007MeasureHumidity();
 
@@ -237,6 +233,63 @@ void medirTask()
 		}
 	}
 }
+
+/**
+ * @brief Tarea encargada de procesar los datos medidos, calculando sus medias, máximos y mínimos
+*/
+void ProcesarTask()
+{
+	char msg4[25];
+	char auxmsg4[10];
+	char msg5[25];
+	char auxmsg5[10];
+
+	//  tarea encargada de aplicar diferentes procesamientos a las señales de entrada: temperatura,humedad, luz
+	//  aca para el promedio de los datos puedo usar el estado de apagado, para luego de tocar en el celular para apagar
+	//  y que no mida mas usar esos datos almacenados en un vector(definir tamaño) para calcular el promedio
+	//  directamente acumular todos los valores en una variable
+
+	while (true)
+	{
+		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+		if (!Encendido)
+		{
+			/*----------------Porción encargada de calcular promedios-------------------*/
+			promedio_temperatura = (acumulador_temperatura / contador_medicion);
+			promedio_humedad = (acumulador_humedad / contador_medicion);
+
+			/*-----------------Porción encargada de buscar máximos y mínimos--------------------*/
+			if (maximo_temperatura < temperatura)
+			{
+				maximo_temperatura = temperatura;
+			}
+			if (minimo_temperatura > temperatura)
+			{
+				minimo_temperatura = temperatura;
+			}
+
+			/*---------------Porción encargada de enviar por bluetooth valores procesados-----------------*/
+			strcpy(msg4, "");
+			sprintf(auxmsg4, "*J%.2f\n*", promedio_temperatura);
+			strcat(msg4, auxmsg4);
+			BleSendString(msg4);
+
+			strcpy(msg5, "");
+			sprintf(auxmsg5, "*j %.2f\n*", promedio_humedad);
+			strcat(msg5, auxmsg5);
+			BleSendString(msg5);
+
+			printf("Temperatura promedio %.2f \n", promedio_temperatura);
+			printf("Humedad promedio %.2f \n", promedio_humedad);
+			printf("Temperatura maxima %.2f \n", maximo_temperatura);
+			printf("Temperatura minima %.2f \n", minimo_temperatura);
+		}
+	}
+}
+/**
+ * @brief Tarea encargada de comparar los datos sensados con los umbrales, y disparar una alerta cuando la medición
+ * de temperatura pase ciertos umbrales
+*/
 
 void compararTask()
 {
