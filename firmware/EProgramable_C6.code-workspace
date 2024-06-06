@@ -47,6 +47,9 @@
         {
             "name": "Proyecto_Integrador_Colazo",
             "path": "projects/Proyecto_Integrador_Colazo"
+        },
+        {
+            "path": "projects/Parcial_Colazo"
         }
     ],
     "settings": {
