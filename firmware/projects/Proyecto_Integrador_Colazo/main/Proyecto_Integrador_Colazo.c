@@ -50,48 +50,48 @@
 /*==================[internal data definition]===============================*/
 /**
  * @brief variable de tipo TaskHandle_t que se utiliza para manejar la tarea comparar.
- * 
-*/
+ *
+ */
 TaskHandle_t comparar_task_handle = NULL;
 /**
  * @brief variable de tipo TaskHandle_t que se utiliza para manejar la tarea mostrar.
- * 
-*/
+ *
+ */
 TaskHandle_t mostrar_task_handle = NULL;
 /**
  * @brief variable de tipo TaskHandle_t que se utiliza para manejar la tarea procesar.
- * 
-*/
+ *
+ */
 TaskHandle_t procesar_task_handle = NULL;
 /**
  * @brief variable de tipo TaskHandle_t que se utiliza para manejar la tarea medir.
- * 
-*/
+ *
+ */
 TaskHandle_t medir_task_handle = NULL;
 /**
  * @brief Variable utilizada para almacenar en tiempo real la temperatura medida.
- * 
-*/
+ *
+ */
 float temperatura;
 /**
  * @brief Variable de tipo neopixel_color_t que representa un arreglo de 8 leds en una tira.
- * 
-*/
+ *
+ */
 static neopixel_color_t TiraLed[8];
 /**
  * @brief Variable utilizada para almacenar en tiempo real el nivel de luz medida.
- * 
-*/
+ *
+ */
 uint16_t nivel_luz = 0;
 /**
  * @brief Variable utilizada para almacenar en tiempo real la humedad recibido.
- * 
-*/
+ *
+ */
 float humedad;
 /**
  * @brief Variable booleana que representa el estado del sistema de monitoreo.
- * 
-*/
+ *
+ */
 bool Encendido = false;
 float promedio_temperatura = 0;
 float promedio_humedad = 0;
@@ -106,10 +106,10 @@ uint8_t contador_medicion = 0;
 /**
  * @fn void leerDato(uint8_t *dato)
  * @brief Función encargada de recibir los datos provenientes de la conexión bluetooth de baja energía(ble).
- * @param dato 
+ * @param dato
  * @brief Dato recibido mediante la conexión bluetooth de baja energía(ble).
- * 
-*/
+ *
+ */
 
 void leerDato(uint8_t *dato)
 {
@@ -135,9 +135,9 @@ void leerDato(uint8_t *dato)
 
 /**
  * @fn void FuncTimerMostrar()
- * @brief función encargada de enviar una notificación a las tareas de mostrar para que 
+ * @brief función encargada de enviar una notificación a las tareas de mostrar para que
  * retomen su funcionamiento
-*/
+ */
 void FuncTimerMostrar()
 {
 	vTaskNotifyGiveFromISR(mostrar_task_handle, pdFALSE);
@@ -145,9 +145,9 @@ void FuncTimerMostrar()
 
 /**
  * @fn void FuncTimerMedir_Comparar_Procesar()
- * @brief función encargada de enviar una notificación a las tareas de medir, comparar y procesar para que 
+ * @brief función encargada de enviar una notificación a las tareas de medir, comparar y procesar para que
  * retomen su funcionamiento
-*/
+ */
 
 void FuncTimerMedir_Comparar_Procesar()
 {
@@ -159,7 +159,7 @@ void FuncTimerMedir_Comparar_Procesar()
 /**
  * @brief Tarea encargada de mostrar los valores medidos de temperatura, humedad y luz, además de promedios, máximos
  * y mínimos cuando sean requeridos y de encender la tira led que indica estado de temperatura
-*/
+ */
 
 void mostrarTask()
 {
@@ -178,9 +178,6 @@ void mostrarTask()
 		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
 		if (Encendido)
 		{
-			// tarea encargada de encender la tira led para el valor de temperatura
-			// en otra tarea deberia tener funciones que apagan los leds de la tira conforme baja cierto nivel de temperatura y sube, tengo que
-			//  calcular las divisiones de cada aumento
 			NeoPixelBrightness(brillo_tira_led);
 			NeoPixelSetArray(arreglo_colores);
 
@@ -211,7 +208,7 @@ void mostrarTask()
 
 /**
  * @brief Tarea encargada de medir las distintas variables, como temperatura, humedad y luz.
-*/
+ */
 
 void medirTask()
 {
@@ -236,7 +233,7 @@ void medirTask()
 
 /**
  * @brief Tarea encargada de procesar los datos medidos, calculando sus medias, máximos y mínimos
-*/
+ */
 void ProcesarTask()
 {
 	char msg4[25];
@@ -289,7 +286,7 @@ void ProcesarTask()
 /**
  * @brief Tarea encargada de comparar los datos sensados con los umbrales, y disparar una alerta cuando la medición
  * de temperatura pase ciertos umbrales
-*/
+ */
 
 void compararTask()
 {
@@ -298,8 +295,6 @@ void compararTask()
 		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
 		if (Encendido)
 		{
-			// tarea encargada de comparar valores actuales de temperatura, humedad y luz versus diferentes valores umbrales
-			// ya seteados
 			if (temperatura < 23)
 			{
 				// Apagar el buzzer
@@ -345,7 +340,7 @@ void app_main(void)
 		.func_p = FuncTimerMostrar,
 		.param_p = NULL};
 
-	timer_config_t TimerMedir_Comparar = {
+	timer_config_t TimerMedir_Comparar_Procesar = {
 		.timer = TIMER_C,
 		.period = PERIODB,
 		.func_p = FuncTimerMedir_Comparar_Procesar,
@@ -355,7 +350,7 @@ void app_main(void)
 	BleInit(&ble_config);
 	AnalogInputInit(&entrada_analogica);
 	Si7007Init(&medidorTemp_Hum);
-	TimerInit(&TimerMedir_Comparar);
+	TimerInit(&TimerMedir_Comparar_Procesar);
 	TimerInit(&TimerMostrar);
 	BuzzerInit(GPIO_18);
 	NeoPixelInit(PIN_NEO_PIXEL, NUMERO_TIRA_PIXEL, &TiraLed);
@@ -368,6 +363,6 @@ void app_main(void)
 
 	/*-----------------------Inicialización de timers------------------------*/
 	TimerStart(TimerMostrar.timer);
-	TimerStart(TimerMedir_Comparar.timer);
+	TimerStart(TimerMedir_Comparar_Procesar.timer);
 }
 /*==================[end of file]============================================*/
