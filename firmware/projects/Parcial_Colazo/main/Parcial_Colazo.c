@@ -4,7 +4,7 @@
  *
  * This section describes how the program works.
  *
- * 
+ *
  *
  * @section hardConn Hardware Connection
  *
@@ -51,7 +51,7 @@
 /**
  * @brief Variable booleana que almacena el valor de encendido del sistema de irrigación.
  */
-bool On = false; 
+bool On = false;
 /**
  * @brief Variable booleana que almacena el estado de la humedad, si es true hay poca humedad.
  */
@@ -63,11 +63,11 @@ float ph = 0;
 /**
  * @brief Variable flotante que contiene el valor umbral inferior para pH monitoreado.
  */
-float umbral_pH_Inferior = 1.28;
+float umbral_pH_Inferior = 1.28; // se corresponde con un valor de pH de 6
 /**
  * @brief Variable flotante que contiene el valor umbral superior para pH monitoreado.
  */
-float umbral_pH_Superior = 1.43;
+float umbral_pH_Superior = 1.43; // se corresponde con un valor de pH de 6.7
 /**
  * @brief Elemento de tipo TaskHandle para manejar la tarea de medir
  */
@@ -163,7 +163,7 @@ FuncTimerInformar()
 }
 
 /**
- * @brief Tarea encargada derealizar las mediciones de pH y humedad. 
+ * @brief Tarea encargada derealizar las mediciones de pH y humedad.
  */
 void medir() // tarea para realizar las mediciones de ph y humedad
 {
@@ -242,7 +242,7 @@ void regar()
 }
 
 /**
- * @brief Tarea encargada de informr por UART los distintos estados de las bombas, valores de pH y de humedad. 
+ * @brief Tarea encargada de informr por UART los distintos estados de las bombas, valores de pH y de humedad.
  */
 void informar()
 {
@@ -261,6 +261,7 @@ void informar()
 void app_main(void)
 {
 
+    /*Definiciones de periféricos*/
     serial_config_t ControlarUart =
         {
             .port = UART_PC,
@@ -295,8 +296,8 @@ void app_main(void)
     UartInit(&ControlarUart);
     AnalogInputInit(&EntradaAnalogica);
 
+    /*Funciones para activar las interrupciones cuando se presionen la teclas 1 y 2 de la placa*/
     SwitchActivInt(SWITCH_1, &Encendido, NULL);
-
     SwitchActivInt(SWITCH_2, &Apagado, NULL);
 
     /*Creación de tareas*/
