@@ -8,9 +8,13 @@
  *
  * @section hardConn Hardware Connection
  *
- * |    Peripheral  |   ESP32   	|
- * |:--------------:|:--------------|
- * | 	PIN_X	 	| 	GPIO_X		|
+ * |      Peripheral     |   ESP32   	|
+ * |:-------------------:|:-------------|
+ * | 	Sensor humedad	 | 	GPIO_1		|
+ * | 	Sensor humedad	 | 	GPIO_1		|
+ * | 	Sensor humedad	 | 	GPIO_1		|
+ * | 	Sensor humedad	 | 	GPIO_1		|
+ * | 	Sensor humedad	 | 	GPIO_1		|
  *
  *
  * @section changelog Changelog
@@ -33,6 +37,7 @@
 #include <timer_mcu.h>
 #include "uart_mcu.h"
 #include "timer_mcu.h"
+#include "switch.h"
 /*==================[macros and definitions]=================================*/
 
 #define GPIO_BOMBA_PHA GPIO_9;
@@ -55,16 +60,36 @@ TaskHandle_t regarTaskHandle = NULL;
 
 /*==================[internal functions declaration]=========================*/
 
+void escribirValorEnPc()
+{
+    UartSendString(UART_PC, "pH ");
+    UartSendString(UART_PC, (char *)UartItoa(ph, 10));
+    if(!humedad)
+    {
+        UartSendString(UART_PC, ", humedad correcta");
+    }
+}
+
+void Encendido()
+{
+    On = true;
+}
+
+void Apagado()
+{
+    On = false;
+}
+
 FuncTimerMedir_Regar()
 {
     /*ya que uso el mismo timer para medir y regar pongo para que se envie la notificacion desde esta misma funcion*/
-    vTaskNotifyGiveFromISR(medirTaskHandle,pdFALSE);
-    vTaskNotifyGiveFromISR(regarTaskHandle,pdFALSE);
+    vTaskNotifyGiveFromISR(medirTaskHandle, pdFALSE);
+    vTaskNotifyGiveFromISR(regarTaskHandle, pdFALSE);
 }
 
 FuncTimerInformar()
 {
-    vTaskNotifyGiveFromISR(informarTaskHandle,pdFALSE);
+    vTaskNotifyGiveFromISR(informarTaskHandle, pdFALSE);
 }
 
 void medir() // tarea para realizar las mediciones de ph y humedad
@@ -72,16 +97,19 @@ void medir() // tarea para realizar las mediciones de ph y humedad
     while (true)
     {
         ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-        AnalogInputReadSingle(CH1, &ph);
-        humedad = GPIORead(GPIO_HUMEDAD);
-        /*se le asigna un valor a ph entre 0V y 3000mV. Tenemos como dato que el sensor tiene una salida desde
-        0V a 3V para un rango de pH desde 0 a 14. Entonces 0V se corresponde a pH = 0 y 3V se corresponde a un
-        pH=14
-        Por lo tanto lo que se plantea es dividir entre 1000 el valor del voltaje asignado a pH y luego hacer regla de
-        3 para calcular que voltaje se corresponde a un pH de 6 y a un pH de 6.7
-        Calculando me da que un ph de 6 se corresponde con un voltaje de 1.28V y un pH de 6.7 se corresponde
-        con un voltaje de 1.43V*/
-        ph = ph / 1000;
+        if (On) // si on se encuentra en bajo no se mide
+        {
+            AnalogInputReadSingle(CH1, &ph);
+            humedad = GPIORead(GPIO_HUMEDAD);
+            /*se le asigna un valor a ph entre 0V y 3000mV. Tenemos como dato que el sensor tiene una salida desde
+            0V a 3V para un rango de pH desde 0 a 14. Entonces 0V se corresponde a pH = 0 y 3V se corresponde a un
+            pH=14
+            Por lo tanto lo que se plantea es dividir entre 1000 el valor del voltaje asignado a pH y luego hacer regla de
+            3 para calcular que voltaje se corresponde a un pH de 6 y a un pH de 6.7
+            Calculando me da que un ph de 6 se corresponde con un voltaje de 1.28V y un pH de 6.7 se corresponde
+            con un voltaje de 1.43V*/
+            ph = ph / 1000;
+        }
     }
 }
 
@@ -90,37 +118,45 @@ void regar()
     while (true)
     {
         ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-        /*Para controlar la bomba de agua*/
-        if (!humedad && (ph < 1.43) && (ph > 1.28))
+        if (On)
         {
-            /*cuando la salida del sensor de humedad es 1, se detecta que el nivel de humedad es superior al deseado
-             y que el pH esta dentro del rango aceptable apago todos los sensores*/
-            GPIOOff(GPIO_BOMBA_AGUA);
-            GPIOOff(GPIO_BOMBA_PHA);
-            GPIOOff(GPIO_BOMBA_PHB);
-        }
-        else if (humedad && (ph < 1.43) && (ph > 1.28))
-        {
-            GPIOOn(GPIO_BOMBA_AGUA);
-            GPIOOff(GPIO_BOMBA_PHB);
-            GPIOOff(GPIO_BOMBA_PHA);
-        }
-        else if (!humedad && (ph > 1.43))
-        {
-            GPIOOff(GPIO_BOMBA_AGUA);
-            GPIOOff(GPIO_BOMBA_PHB);
-            GPIOOn(GPIO_BOMBA_PHA);
-        }
+            /*Para controlar la bomba de agua*/
+            if (!humedad && (ph < umbral_pH_Superior) && (ph > umbral_pH_Inferior))
+            {
+                /*cuando la salida del sensor de humedad es 1, se detecta que el nivel de humedad es superior al deseado
+                 y que el pH esta dentro del rango aceptable apago todos los sensores*/
+                GPIOOff(GPIO_BOMBA_AGUA);
+                GPIOOff(GPIO_BOMBA_PHA);
+                GPIOOff(GPIO_BOMBA_PHB);
+            }
+            else if (humedad && (ph < umbral_pH_Superior) && (ph > umbral_pH_Inferior))
+            {
+                GPIOOn(GPIO_BOMBA_AGUA);
+                GPIOOff(GPIO_BOMBA_PHB);
+                GPIOOff(GPIO_BOMBA_PHA);
+            }
+            else if (!humedad && (ph > umbral_pH_Superior))
+            {
+                GPIOOff(GPIO_BOMBA_AGUA);
+                GPIOOff(GPIO_BOMBA_PHB);
+                GPIOOn(GPIO_BOMBA_PHA);
+            }
 
-        
-        else if ((!humedad) &&(ph <1.28))
-        {
-            /*cuando la salida del sensor de humedad es 0, se detecta que el nivel de humedad es inferior al deseado*/
-            GPIOOff(GPIO_BOMBA_AGUA);
-            GPIOOn(GPIO_BOMBA_PHB);
-            GPIOOff(GPIO_BOMBA_PHA);
+            else if ((!humedad) && (ph < umbral_pH_Inferior))
+            {
+                /*cuando la salida del sensor de humedad es 0, se detecta que el nivel de humedad es inferior al deseado*/
+                GPIOOff(GPIO_BOMBA_AGUA);
+                GPIOOn(GPIO_BOMBA_PHB);
+                GPIOOff(GPIO_BOMBA_PHA);
+            }
+            else if ((humedad) && (ph < umbral_pH_Inferior))
+            {
+                GPIOOn(GPIO_BOMBA_AGUA);
+                GPIOOn(GPIO_BOMBA_PHB);
+                GPIOOff(GPIO_BOMBA_PHA);
+            }
         }
-        else if ((humedad)&&(ph <1.28))
+        else
         {
             GPIOOn(GPIO_BOMBA_AGUA);
             GPIOOn(GPIO_BOMBA_PHB);
@@ -155,7 +191,6 @@ void app_main(void)
         .param_p = NULL,
         .sample_frec = 0};
 
-    /* Inicialización de timer de conversor AD */
     timer_config_t timer_medir_regar = {
         .timer = TIMER_A,
         .period = PERIODO_MEDICION,
@@ -168,13 +203,24 @@ void app_main(void)
         .func_p = FuncTimerInformar,
         .param_p = NULL};
 
+    /*Inicializacion de dispositivos o perifericos*/
+    SwitchesInit();
     TimerInit(&timer_medir_regar);
     TimerInit(&timer_informar);
     UartInit(&ControlarUart);
     AnalogInputInit(&EntradaAnalogica);
 
+    SwitchActivInt(SWITCH_1, &Encendido, NULL);
+
+    SwitchActivInt(SWITCH_2, &Apagado, NULL);
+
+    /*Creación de tareas*/
     xTaskCreate(&regar, "medir", 4096, NULL, 5, &medirTaskHandle);
     xTaskCreate(&medir, "regar", 4096, NULL, 5, &regarTaskHandle);
     xTaskCreate(&informar, "informar", 4096, NULL, 5, &informarTaskHandle);
+
+    /*Arranque de timers*/
+    TimerStart(timer_informar.timer);
+    TimerStart(timer_medir_regar.timer);
 }
 /*==================[end of file]============================================*/
