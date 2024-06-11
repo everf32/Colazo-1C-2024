@@ -2,14 +2,19 @@
  *
  * @section genDesc General Description
  *
- * This section describes how the program works.
+ * Esta aplicación realiza la medición en tiempo real de la temperatura,humedad y luz en una caja de vacunas, 
+ * alertando cuando la temperatura esté fuera del rango establecido(2°C-8°C) mediante el sonido de un Buzzer. Además mediante la conexión ble
+ * permite el monitoreo remoto desde una aplicación desde un dispositivo inteligente como un smartphone o tablet.
  *
  *
  * @section hardConn Hardware Connection
  *
  * |    Peripheral  |   ESP32   	|
  * |:--------------:|:--------------|
- * | 	PIN_X	 	| 	GPIO_X		|
+ * | 	LDR  	 	| 	GPIO_0		|
+ * | 	Si7007	 	| 	GPIO_3		|
+ * | Neopixel Stripe| 	GPIO_9		|
+ * | 	Buzzer	 	| 	GPIO_18		|
  *
  *
  * @section changelog Changelog
@@ -17,6 +22,9 @@
  * |   Date	    | Description                                    |
  * |:----------:|:-----------------------------------------------|
  * | 15/05/2024 | Inicio del proyecto		                     |
+ * |05/06/2024  |Inicio de documentación                         |
+ * |06/06/2024  |Fin de documentación                            |
+ * 
  *
  * @author Ever Colazo (everf97@gmail.com)
  *
@@ -44,8 +52,8 @@
 #define PERIODB 4000000
 #define NUMERO_TIRA_PIXEL 8
 #define PIN_NEO_PIXEL GPIO_9
-#define UPPER_THRESHOLD 8.0 // Umbral superior para temperatura
-#define LOWER_THRESHOLD 2.0 // Umbral inferior para temperatura
+#define UMBRAL_SUPERIOR_TEMPERATURA 8.0 // Umbral superior para temperatura
+#define UMBRAL_INFERIOR_TEMPERATURA 2.0 // Umbral inferior para temperatura
 
 /*==================[internal data definition]===============================*/
 /**
@@ -93,12 +101,40 @@ float humedad;
  *
  */
 bool Encendido = false;
+/**
+ * @brief Variable encargada de almacenar el promedio de temperatura medido en un cierto intervalo de tiempo.
+ *
+ */
 float promedio_temperatura = 0;
+/**
+ * @brief Variable encargada de almacenar el promedio de humedad medido en un cierto intervalo de tiempo.
+ *
+ */
 float promedio_humedad = 0;
+/**
+ * @brief Variable encargada de almacenar el máximo valor de temperatura medido en el tiempo en el cual se registraron 
+ * los datos.
+ */
 float maximo_temperatura = 0;
+/**
+ * @brief Variable encargada de almacenar el mínimo valor de temperatura medido en el tiempo en el cual se registraron 
+ * los datos.
+ */
 float minimo_temperatura = 0;
+/**
+ * @brief Variable auxiliar encargada de almacenar el valor acumulado de temperatura mientras la aplicación se encuentra
+ * funcionando. Se utilizan para calcular el promedio.
+ */
 float acumulador_temperatura = 0;
+/**
+ * @brief Variable auxiliar encargada de almacenar el valor acumulado de humedad mientras la aplicación se encuentra
+ * funcionando. Se utilizan para calcular el promedio.
+ */
 float acumulador_humedad = 0;
+/**
+ * @brief Variable auxiliar encargada de almacenar el número de ciclos en los cuales se realizaron mediciones.
+ * Se utilizan para calcular el promedio.
+ */
 uint8_t contador_medicion = 0;
 
 /*==================[internal functions declaration]=========================*/
@@ -124,6 +160,7 @@ void leerDato(uint8_t *dato)
 		minimo_temperatura = 0;
 		acumulador_temperatura = 0;
 		acumulador_humedad = 0;
+		BuzzerOff();
 		break;
 
 	case 'a':
@@ -136,7 +173,7 @@ void leerDato(uint8_t *dato)
 /**
  * @fn void FuncTimerMostrar()
  * @brief función encargada de enviar una notificación a las tareas de mostrar para que
- * retomen su funcionamiento
+ * retomen su funcionamiento.
  */
 void FuncTimerMostrar()
 {
@@ -145,8 +182,8 @@ void FuncTimerMostrar()
 
 /**
  * @fn void FuncTimerMedir_Comparar_Procesar()
- * @brief función encargada de enviar una notificación a las tareas de medir, comparar y procesar para que
- * retomen su funcionamiento
+ * @brief Función encargada de enviar una notificación a las tareas de medir, comparar y procesar para que
+ * retomen su funcionamiento.
  */
 
 void FuncTimerMedir_Comparar_Procesar()
@@ -158,7 +195,7 @@ void FuncTimerMedir_Comparar_Procesar()
 
 /**
  * @brief Tarea encargada de mostrar los valores medidos de temperatura, humedad y luz, además de promedios, máximos
- * y mínimos cuando sean requeridos y de encender la tira led que indica estado de temperatura
+ * y mínimos cuando sean requeridos y de encender la tira led que indica estado de temperatura.
  */
 
 void mostrarTask()
@@ -241,11 +278,6 @@ void ProcesarTask()
 	char msg5[25];
 	char auxmsg5[10];
 
-	//  tarea encargada de aplicar diferentes procesamientos a las señales de entrada: temperatura,humedad, luz
-	//  aca para el promedio de los datos puedo usar el estado de apagado, para luego de tocar en el celular para apagar
-	//  y que no mida mas usar esos datos almacenados en un vector(definir tamaño) para calcular el promedio
-	//  directamente acumular todos los valores en una variable
-
 	while (true)
 	{
 		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
@@ -295,15 +327,17 @@ void compararTask()
 		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
 		if (Encendido)
 		{
-			if (temperatura < 23)
+			if ((temperatura > UMBRAL_SUPERIOR_TEMPERATURA)||(temperatura < UMBRAL_INFERIOR_TEMPERATURA))
+			//if(temperatura > 24)
+			{
+				// Encender el buzzer
+				BuzzerOn();
+			}
+			 else if ((temperatura < UMBRAL_SUPERIOR_TEMPERATURA)||(temperatura > UMBRAL_INFERIOR_TEMPERATURA))
+			 //else if(temperatura <24)
 			{
 				// Apagar el buzzer
 				BuzzerOff();
-			}
-			if (temperatura > 23)
-			{
-				// Encender buzzer
-				BuzzerOn();
 			}
 			// falta definir como interpretar la luz que mide el ldr, capaz que  haya que aplicarle algun procesamiento a la señal que entra
 		}
