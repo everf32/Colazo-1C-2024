@@ -1,27 +1,27 @@
-/*! @mainpage Template
+/*! @mainpage Irrigación automática de plantas
  *
  * @section genDesc General Description
  *
  * This section describes how the program works.
  *
- * <a href="https://drive.google.com/...">Operation Example</a>
+ * 
  *
  * @section hardConn Hardware Connection
  *
  * |      Peripheral     |   ESP32   	|
  * |:-------------------:|:-------------|
+ * | 	Sensor pH	     | 	GPIO_0		|
  * | 	Sensor humedad	 | 	GPIO_1		|
- * | 	Sensor humedad	 | 	GPIO_1		|
- * | 	Sensor humedad	 | 	GPIO_1		|
- * | 	Sensor humedad	 | 	GPIO_1		|
- * | 	Sensor humedad	 | 	GPIO_1		|
+ * | 	Bomba de pHA	 | 	GPIO_9		|
+ * | 	Bomba de pHB	 | 	GPIO_17		|
+ * | 	Bomba agua  	 | 	GPIO_18		|
  *
  *
  * @section changelog Changelog
  *
  * |   Date	    | Description                                    |
  * |:----------:|:-----------------------------------------------|
- * | 20/03/2024 | Document creation		                         |
+ * | 20/03/2024 | Creación y finalización de documentación	     |
  *
  * @author Ever Colazo (everf97@gmail.com)
  *
@@ -48,38 +48,104 @@
 #define PERIODO_MEDICION 3000000 // en microsegundos por el timer
 #define PERIODO_INFORMAR 5000000
 /*==================[internal data definition]===============================*/
-bool On = false; // variable para corroborar el estado del sistema si esta encendido o apagado. Arranca apagado
+/**
+ * @brief Variable booleana que almacena el valor de encendido del sistema de irrigación.
+ */
+bool On = false; 
+/**
+ * @brief Variable booleana que almacena el estado de la humedad, si es true hay poca humedad.
+ */
 bool humedad;
+/**
+ * @brief Variable flotante que almacena el valor leido de pH por el sensor.
+ */
 float ph = 0;
+/**
+ * @brief Variable flotante que contiene el valor umbral inferior para pH monitoreado.
+ */
 float umbral_pH_Inferior = 1.28;
+/**
+ * @brief Variable flotante que contiene el valor umbral superior para pH monitoreado.
+ */
 float umbral_pH_Superior = 1.43;
-
+/**
+ * @brief Elemento de tipo TaskHandle para manejar la tarea de medir
+ */
 TaskHandle_t medirTaskHandle = NULL;
+/**
+ * @brief Elemento de tipo TaskHandle para manejar la tarea de informar
+ */
 TaskHandle_t informarTaskHandle = NULL;
+/**
+ * @brief Elemento de tipo TaskHandle para manejar la tarea de regar
+ */
 TaskHandle_t regarTaskHandle = NULL;
 
 /*==================[internal functions declaration]=========================*/
-
-void escribirValorEnPc()
+/**
+ * @fn void escribirValorpHEnPc()
+ * @brief Funcion encargada de enviar por comnunicación serie los valores de pH medidos
+ */
+void escribirValorpHEnPc()
 {
-    UartSendString(UART_PC, "pH ");
+    UartSendString(UART_PC, "pH: ");
     UartSendString(UART_PC, (char *)UartItoa(ph, 10));
-    if(!humedad)
+    if (!humedad)
     {
         UartSendString(UART_PC, ", humedad correcta");
+        UartSendString(UART_PC, "\r");
+    }
+    else
+    {
+        UartSendString(UART_PC, ", humedad correcta");
+        UartSendString(UART_PC, "\r");
     }
 }
 
+/**
+ * @fn void escribirEstadosBombasEnPc()
+ * @brief Funcion encargada de enviar por comnunicación serie los estados de las bombas cuando se enseñen
+ */
+void escribirEstadoBombasEnPc()
+{
+    if (humedad)
+    {
+        UartSendString(UART_PC, "Bomba de agua encendida");
+        UartSendString(UART_PC, "\r");
+    }
+    if (ph < umbral_pH_Inferior)
+    {
+        UartSendString(UART_PC, "Bomba pHB encendida");
+        UartSendString(UART_PC, "\r");
+    }
+    if (ph > umbral_pH_Superior)
+    {
+        UartSendString(UART_PC, "Bomba phA encendida");
+        UartSendString(UART_PC, "\r");
+    }
+}
+/**
+ * @fn void Encendido()
+ * @brief Funcion encargada de setear a la bandera booleana On a verdadero.
+ */
 void Encendido()
 {
     On = true;
 }
 
+/**
+ * @fn void Encendido()
+ * @brief Funcion encargada de setear a la bandera booleana On a falso.
+ */
 void Apagado()
 {
     On = false;
 }
 
+/**
+ * @fn void FuncTimerMedir_Regar()
+ * @brief Funcion encargada de enviar la notificacion para que se reanuden las tareas medir y regar.
+ */
 FuncTimerMedir_Regar()
 {
     /*ya que uso el mismo timer para medir y regar pongo para que se envie la notificacion desde esta misma funcion*/
@@ -87,11 +153,18 @@ FuncTimerMedir_Regar()
     vTaskNotifyGiveFromISR(regarTaskHandle, pdFALSE);
 }
 
+/**
+ * @fn void FuncTimerMedir_Regar()
+ * @brief Funcion encargada de enviar la notificacion para que se reanude la tarea informar
+ */
 FuncTimerInformar()
 {
     vTaskNotifyGiveFromISR(informarTaskHandle, pdFALSE);
 }
 
+/**
+ * @brief Tarea encargada derealizar las mediciones de pH y humedad. 
+ */
 void medir() // tarea para realizar las mediciones de ph y humedad
 {
     while (true)
@@ -113,6 +186,9 @@ void medir() // tarea para realizar las mediciones de ph y humedad
     }
 }
 
+/**
+ * @brief Tarea encargada de comparar valores medidos de pH y humedad y realizar alguna acción.
+ */
 void regar()
 {
     while (true)
@@ -165,10 +241,19 @@ void regar()
     }
 }
 
+/**
+ * @brief Tarea encargada de informr por UART los distintos estados de las bombas, valores de pH y de humedad. 
+ */
 void informar()
 {
     while (true)
     {
+        ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+        if (On)
+        {
+            escribirValorpHEnPc();
+            escribirEstadoBombasEnPc();
+        }
     }
 }
 
