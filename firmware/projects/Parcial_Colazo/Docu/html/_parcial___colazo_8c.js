@@ -1,0 +1,28 @@
+var _parcial___colazo_8c =
+[
+    [ "GPIO_BOMBA_AGUA", "_parcial___colazo_8c.html#a600dff47a21a71d2da1c0d7befbe4ea6", null ],
+    [ "GPIO_BOMBA_PHA", "_parcial___colazo_8c.html#a5b2d8ac2c52b54d73c5bc3e04c582174", null ],
+    [ "GPIO_BOMBA_PHB", "_parcial___colazo_8c.html#a0f7f07586bc7acaef1f1dd64a6710713", null ],
+    [ "GPIO_HUMEDAD", "_parcial___colazo_8c.html#abd34bed438dbcf9639b3c2374e9564c1", null ],
+    [ "GPIO_PH", "_parcial___colazo_8c.html#a9172bbd8c7d714de9c9148a3c3c202f9", null ],
+    [ "PERIODO_INFORMAR", "_parcial___colazo_8c.html#a2cfa3306a48253b4e075576b4dee09bb", null ],
+    [ "PERIODO_MEDICION", "_parcial___colazo_8c.html#a5cf10d41cfee7ea378cacaa9ee3db07d", null ],
+    [ "Apagado", "_parcial___colazo_8c.html#af53dba556c3c1dda49f4aed4dec03c73", null ],
+    [ "app_main", "_parcial___colazo_8c.html#a630544a7f0a2cc40d8a7fefab7e2fe70", null ],
+    [ "Encendido", "_parcial___colazo_8c.html#a1077f2250598707b058c4077db104b73", null ],
+    [ "escribirEstadoBombasEnPc", "_parcial___colazo_8c.html#a224f57a633a45d2ba3238eee7037e75d", null ],
+    [ "escribirValorpHEnPc", "_parcial___colazo_8c.html#adf5de1a68a5667f5b6e08925fc9440b3", null ],
+    [ "FuncTimerInformar", "_parcial___colazo_8c.html#a21e360cb12306891817eb9e68598d4fc", null ],
+    [ "FuncTimerMedir_Regar", "_parcial___colazo_8c.html#acb4defaf266760dc5ec5aed529564848", null ],
+    [ "informar", "_parcial___colazo_8c.html#a22533c92b84da588dc7ea344d1e27596", null ],
+    [ "medir", "_parcial___colazo_8c.html#aedec6d1f300db60299587d06c844aa38", null ],
+    [ "regar", "_parcial___colazo_8c.html#a4f593291e71ef90b3721b558c2ede500", null ],
+    [ "humedad", "_parcial___colazo_8c.html#aa936fa27f304083f08c7534b2b100ab5", null ],
+    [ "informarTaskHandle", "_parcial___colazo_8c.html#aa9b3fb6c1d295f7d508404c3859bedec", null ],
+    [ "medirTaskHandle", "_parcial___colazo_8c.html#a4c1eb594b9229430acfca622788009ec", null ],
+    [ "On", "_parcial___colazo_8c.html#a31cf15f22d4357e337dfef151b74cac4", null ],
+    [ "ph", "_parcial___colazo_8c.html#aaf53d963ff9bf6063bc8e120de5d84c7", null ],
+    [ "regarTaskHandle", "_parcial___colazo_8c.html#a67cb6c22c250c389ecb173cacf22f1fe", null ],
+    [ "umbral_pH_Inferior", "_parcial___colazo_8c.html#a90fdf934d2b5bc6cda23708260f927e0", null ],
+    [ "umbral_pH_Superior", "_parcial___colazo_8c.html#a479982790ff8e600eb9443f4f6623102", null ]
+];
