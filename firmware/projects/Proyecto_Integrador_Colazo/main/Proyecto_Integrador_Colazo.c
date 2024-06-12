@@ -2,7 +2,7 @@
  *
  * @section genDesc General Description
  *
- * Esta aplicación realiza la medición en tiempo real de la temperatura,humedad y luz en una caja de vacunas, 
+ * Esta aplicación realiza la medición en tiempo real de la temperatura,humedad y luz en una caja de vacunas,
  * alertando cuando la temperatura esté fuera del rango establecido(2°C-8°C) mediante el sonido de un Buzzer. Además mediante la conexión ble
  * permite el monitoreo remoto desde una aplicación desde un dispositivo inteligente como un smartphone o tablet.
  *
@@ -24,7 +24,7 @@
  * | 15/05/2024 | Inicio del proyecto		                     |
  * |05/06/2024  |Inicio de documentación                         |
  * |06/06/2024  |Fin de documentación                            |
- * 
+ *
  *
  * @author Ever Colazo (everf97@gmail.com)
  *
@@ -48,8 +48,7 @@
 #include "stdbool.h"
 
 /*==================[macros and definitions]=================================*/
-#define PERIODA 5000000
-#define PERIODB 4000000
+#define PERIODA 1000000
 #define NUMERO_TIRA_PIXEL 8
 #define PIN_NEO_PIXEL GPIO_9
 #define UMBRAL_SUPERIOR_TEMPERATURA 8.0 // Umbral superior para temperatura
@@ -82,11 +81,6 @@ TaskHandle_t medir_task_handle = NULL;
  */
 float temperatura;
 /**
- * @brief Variable de tipo neopixel_color_t que representa un arreglo de 8 leds en una tira.
- *
- */
-static neopixel_color_t TiraLed[8];
-/**
  * @brief Variable utilizada para almacenar en tiempo real el nivel de luz medida.
  *
  */
@@ -112,12 +106,12 @@ float promedio_temperatura = 0;
  */
 float promedio_humedad = 0;
 /**
- * @brief Variable encargada de almacenar el máximo valor de temperatura medido en el tiempo en el cual se registraron 
+ * @brief Variable encargada de almacenar el máximo valor de temperatura medido en el tiempo en el cual se registraron
  * los datos.
  */
 float maximo_temperatura = 0;
 /**
- * @brief Variable encargada de almacenar el mínimo valor de temperatura medido en el tiempo en el cual se registraron 
+ * @brief Variable encargada de almacenar el mínimo valor de temperatura medido en el tiempo en el cual se registraron
  * los datos.
  */
 float minimo_temperatura = 0;
@@ -161,6 +155,33 @@ void leerDato(uint8_t *dato)
 		acumulador_temperatura = 0;
 		acumulador_humedad = 0;
 		BuzzerOff();
+		char msg1[25];
+		char auxmsg1[10];
+		char msg2[25];
+		char auxmsg2[10];
+		char msg3[25];
+		char auxmsg3[10];
+		char msg4[25];
+		char auxmsg4[10];
+		strcpy(msg4, "");
+		sprintf(auxmsg1, "*J%.2f\n*", promedio_temperatura);
+		strcat(msg1, auxmsg1);
+		BleSendString(msg1);
+
+		strcpy(msg2, "");
+		sprintf(auxmsg2, "*j %.2f\n*", promedio_humedad);
+		strcat(msg2, auxmsg2);
+		BleSendString(msg2);
+
+		strcpy(msg3, "");
+		sprintf(auxmsg3, "*b%.2f\n*", maximo_temperatura);
+		strcat(msg3, auxmsg3);
+		BleSendString(msg3);
+
+		strcpy(msg4, "");
+		sprintf(auxmsg4, "*B%.2f\n*", minimo_temperatura);
+		strcat(msg4, auxmsg4);
+		BleSendString(msg4);
 		break;
 
 	case 'a':
@@ -171,26 +192,17 @@ void leerDato(uint8_t *dato)
 }
 
 /**
- * @fn void FuncTimerMostrar()
- * @brief función encargada de enviar una notificación a las tareas de mostrar para que
- * retomen su funcionamiento.
- */
-void FuncTimerMostrar()
-{
-	vTaskNotifyGiveFromISR(mostrar_task_handle, pdFALSE);
-}
-
-/**
  * @fn void FuncTimerMedir_Comparar_Procesar()
  * @brief Función encargada de enviar una notificación a las tareas de medir, comparar y procesar para que
  * retomen su funcionamiento.
  */
 
-void FuncTimerMedir_Comparar_Procesar()
+void FuncTimerGlobal()
 {
 	vTaskNotifyGiveFromISR(medir_task_handle, pdFALSE);
 	vTaskNotifyGiveFromISR(comparar_task_handle, pdFALSE);
 	vTaskNotifyGiveFromISR(procesar_task_handle, pdFALSE);
+	vTaskNotifyGiveFromISR(mostrar_task_handle, pdFALSE);
 }
 
 /**
@@ -257,10 +269,12 @@ void medirTask()
 			//--------------Medicion de luz-----------------
 			AnalogInputReadSingle(CH0, &nivel_luz);
 			//----------Medicion de temperatura-------------
-			temperatura = Si7007MeasureTemperature();
+			// temperatura = Si7007MeasureTemperature();
+			temperatura = Si7007MeasureTemperature() * 0.2;
 			acumulador_temperatura += temperatura;
 			//-------------Medicion de humedad--------------
-			humedad = Si7007MeasureHumidity();
+			// humedad = Si7007MeasureHumidity();
+			humedad = Si7007MeasureHumidity() * 0.5;
 
 			acumulador_humedad += humedad;
 			contador_medicion += 1;
@@ -277,6 +291,10 @@ void ProcesarTask()
 	char auxmsg4[10];
 	char msg5[25];
 	char auxmsg5[10];
+	char msg6[25];
+	char auxmsg6[10];
+	char msg7[25];
+	char auxmsg7[10];
 
 	while (true)
 	{
@@ -308,8 +326,16 @@ void ProcesarTask()
 			strcat(msg5, auxmsg5);
 			BleSendString(msg5);
 
-			printf("Temperatura promedio %.2f \n", promedio_temperatura);
-			printf("Humedad promedio %.2f \n", promedio_humedad);
+			strcpy(msg6, "");
+			sprintf(auxmsg6, "*b%.2f\n*", maximo_temperatura);
+			strcat(msg6, auxmsg6);
+			BleSendString(msg6);
+
+			strcpy(msg6, "");
+			sprintf(auxmsg6, "*B%.2f\n*", minimo_temperatura);
+			strcat(msg6, auxmsg6);
+			BleSendString(msg6);
+
 			printf("Temperatura maxima %.2f \n", maximo_temperatura);
 			printf("Temperatura minima %.2f \n", minimo_temperatura);
 		}
@@ -327,19 +353,25 @@ void compararTask()
 		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
 		if (Encendido)
 		{
-			if ((temperatura > UMBRAL_SUPERIOR_TEMPERATURA)||(temperatura < UMBRAL_INFERIOR_TEMPERATURA))
-			//if(temperatura > 24)
-			{
-				// Encender el buzzer
-				BuzzerOn();
-			}
-			 else if ((temperatura < UMBRAL_SUPERIOR_TEMPERATURA)||(temperatura > UMBRAL_INFERIOR_TEMPERATURA))
-			 //else if(temperatura <24)
+			if ((temperatura < UMBRAL_SUPERIOR_TEMPERATURA) && (temperatura > UMBRAL_INFERIOR_TEMPERATURA))
 			{
 				// Apagar el buzzer
 				BuzzerOff();
 			}
+
+			else if ((temperatura > UMBRAL_SUPERIOR_TEMPERATURA) || (temperatura < UMBRAL_INFERIOR_TEMPERATURA))
+			{
+				// Encender el buzzer
+				// BuzzerOn();
+				BuzzerPlayTone(50, 1000);
+			}
 			// falta definir como interpretar la luz que mide el ldr, capaz que  haya que aplicarle algun procesamiento a la señal que entra
+
+			/*Acá cambio los leds prendidos de la tira en función de la temperatura*/
+
+			if (temperatura == 5)
+			{
+			}
 		}
 	}
 }
@@ -366,26 +398,21 @@ void app_main(void)
 		.param_p = NULL,
 		.sample_frec = 0};
 
+	static neopixel_color_t TiraLed[8];
+
 	/*--------------------Definicion de timers---------------------*/
 
-	timer_config_t TimerMostrar = {
-		.timer = TIMER_B,
-		.period = PERIODA,
-		.func_p = FuncTimerMostrar,
-		.param_p = NULL};
-
-	timer_config_t TimerMedir_Comparar_Procesar = {
+	timer_config_t TimerGlobal = {
 		.timer = TIMER_C,
-		.period = PERIODB,
-		.func_p = FuncTimerMedir_Comparar_Procesar,
+		.period = PERIODA,
+		.func_p = FuncTimerGlobal,
 		.param_p = NULL};
 
 	/*--------------------Inicializacion de dispositivos---------------------*/
 	BleInit(&ble_config);
 	AnalogInputInit(&entrada_analogica);
 	Si7007Init(&medidorTemp_Hum);
-	TimerInit(&TimerMedir_Comparar_Procesar);
-	TimerInit(&TimerMostrar);
+	TimerInit(&TimerGlobal);
 	BuzzerInit(GPIO_18);
 	NeoPixelInit(PIN_NEO_PIXEL, NUMERO_TIRA_PIXEL, &TiraLed);
 
@@ -396,7 +423,6 @@ void app_main(void)
 	xTaskCreate(&medirTask, "medir", 4096, NULL, 5, &medir_task_handle);
 
 	/*-----------------------Inicialización de timers------------------------*/
-	TimerStart(TimerMostrar.timer);
-	TimerStart(TimerMedir_Comparar_Procesar.timer);
+	TimerStart(TimerGlobal.timer);
 }
 /*==================[end of file]============================================*/
