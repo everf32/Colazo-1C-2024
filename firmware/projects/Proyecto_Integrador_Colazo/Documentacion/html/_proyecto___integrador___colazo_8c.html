@@ -1,0 +1,925 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.10.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Proyecto_Integrador: Referencia del archivo C:/Repositorios/Colazo-1C-2024/firmware/projects/Proyecto_Integrador_Colazo/main/Proyecto_Integrador_Colazo.c</title>
+<link rel="icon" href="icon.ico" type="image/x-icon" />
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="fiuner.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">Proyecto_Integrador
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="Buscar" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.10.0 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('_proyecto___integrador___colazo_8c.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#define-members">defines</a> &#124;
+<a href="#func-members">Funciones</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle"><div class="title">Referencia del archivo Proyecto_Integrador_Colazo.c</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &quot;freertos/FreeRTOS.h&quot;</code><br />
+<code>#include &quot;freertos/task.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="gpio__mcu_8h_source.html">gpio_mcu.h</a>&quot;</code><br />
+<code>#include &lt;<a class="el" href="led_8h_source.html">led.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="ble__mcu_8h_source.html">ble_mcu.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="neopixel__stripe_8h_source.html">neopixel_stripe.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="ws2812b_8h_source.html">ws2812b.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="timer__mcu_8h_source.html">timer_mcu.h</a>&gt;</code><br />
+<code>#include &quot;<a class="el" href="analog__io__mcu_8h_source.html">analog_io_mcu.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_si7007_8h_source.html">Si7007.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="buzzer_8h_source.html">buzzer.h</a>&quot;</code><br />
+<code>#include &quot;stdbool.h&quot;</code><br />
+</div>
+<p><a href="_proyecto___integrador___colazo_8c_source.html">Ir al código fuente de este archivo.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+defines</h2></td></tr>
+<tr class="memitem:a3085f4877388c18954b353865f58cd56" id="r_a3085f4877388c18954b353865f58cd56"><td class="memItemLeft" align="right" valign="top">#<a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">define</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3085f4877388c18954b353865f58cd56">PERIODO</a>&#160;&#160;&#160;1000000</td></tr>
+<tr class="separator:a3085f4877388c18954b353865f58cd56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7005226e20f02bc769e6b88d1367b3b2" id="r_a7005226e20f02bc769e6b88d1367b3b2"><td class="memItemLeft" align="right" valign="top">#<a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">define</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7005226e20f02bc769e6b88d1367b3b2">GPIO_SENSOR_HUMEDAD_TEMPERATURA</a>&#160;&#160;&#160;<a class="el" href="group___g_i_o_p.html#ggaf65604147d0244c9b13cfdc865ad5393a426d08ab85ab3aebbb53eed1a32dfb71">GPIO_3</a></td></tr>
+<tr class="separator:a7005226e20f02bc769e6b88d1367b3b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae525dec8a83d13b48c605928cfb17873" id="r_ae525dec8a83d13b48c605928cfb17873"><td class="memItemLeft" align="right" valign="top">#<a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">define</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae525dec8a83d13b48c605928cfb17873">GPIO_NEO_PIXEL</a>&#160;&#160;&#160;<a class="el" href="group___g_i_o_p.html#ggaf65604147d0244c9b13cfdc865ad5393a8bdaec9182fb8ab2106d5c67f3eabd2d">GPIO_9</a></td></tr>
+<tr class="separator:ae525dec8a83d13b48c605928cfb17873"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7987f207dd9c6d153beed96f092cb65" id="r_af7987f207dd9c6d153beed96f092cb65"><td class="memItemLeft" align="right" valign="top">#<a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">define</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af7987f207dd9c6d153beed96f092cb65">GPIO_BUZZER</a>&#160;&#160;&#160;<a class="el" href="group___g_i_o_p.html#ggaf65604147d0244c9b13cfdc865ad5393a0e8bab7ea873c22eb90aa81116208917">GPIO_18</a></td></tr>
+<tr class="separator:af7987f207dd9c6d153beed96f092cb65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa65fb7595198f23d285838ccc34ad515" id="r_aa65fb7595198f23d285838ccc34ad515"><td class="memItemLeft" align="right" valign="top">#<a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">define</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa65fb7595198f23d285838ccc34ad515">NUMERO_TIRA_PIXEL</a>&#160;&#160;&#160;8</td></tr>
+<tr class="separator:aa65fb7595198f23d285838ccc34ad515"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5826ee125e3f4c044b163b10a790b462" id="r_a5826ee125e3f4c044b163b10a790b462"><td class="memItemLeft" align="right" valign="top">#<a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">define</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5826ee125e3f4c044b163b10a790b462">UMBRAL_SUPERIOR_TEMPERATURA</a>&#160;&#160;&#160;8.0</td></tr>
+<tr class="separator:a5826ee125e3f4c044b163b10a790b462"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20c3b97f32214e453a4723e0d62fa8a5" id="r_a20c3b97f32214e453a4723e0d62fa8a5"><td class="memItemLeft" align="right" valign="top">#<a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">define</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a20c3b97f32214e453a4723e0d62fa8a5">UMBRAL_INFERIOR_TEMPERATURA</a>&#160;&#160;&#160;2.0</td></tr>
+<tr class="separator:a20c3b97f32214e453a4723e0d62fa8a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15ff5dc1cab223ac32ea1945b74e25f8" id="r_a15ff5dc1cab223ac32ea1945b74e25f8"><td class="memItemLeft" align="right" valign="top">#<a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">define</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a15ff5dc1cab223ac32ea1945b74e25f8">NEOPIXEL_COLOR_OFF</a>&#160;&#160;&#160;0x00000000</td></tr>
+<tr class="separator:a15ff5dc1cab223ac32ea1945b74e25f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Funciones</h2></td></tr>
+<tr class="memitem:a4feabe4c20d5c713954f1c0392501151" id="r_a4feabe4c20d5c713954f1c0392501151"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4feabe4c20d5c713954f1c0392501151">leerDato</a> (<a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">uint8_t</a> *<a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">dato</a>)</td></tr>
+<tr class="memdesc:a4feabe4c20d5c713954f1c0392501151"><td class="mdescLeft">&#160;</td><td class="mdescRight">Función encargada de recibir los datos provenientes de la conexión bluetooth de baja <a class="el" href="#a8347aeb522c9e13e9f376640fad780e7" title="Variable utilizada para almacenar en tiempo real la temperatura medida.">energía(ble)</a>.  <br /></td></tr>
+<tr class="separator:a4feabe4c20d5c713954f1c0392501151"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a827e080d6beab59d3b6f5c2e6e828a04" id="r_a827e080d6beab59d3b6f5c2e6e828a04"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a827e080d6beab59d3b6f5c2e6e828a04">FuncTimerGlobal</a> ()</td></tr>
+<tr class="separator:a827e080d6beab59d3b6f5c2e6e828a04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abafd14d719f27a0ecd842a8d6c7cb662" id="r_abafd14d719f27a0ecd842a8d6c7cb662"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abafd14d719f27a0ecd842a8d6c7cb662">mostrarTask</a> ()</td></tr>
+<tr class="memdesc:abafd14d719f27a0ecd842a8d6c7cb662"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tarea encargada de mostrar los valores medidos de temperatura, humedad y luz, además de promedios, máximos y mínimos cuando sean requeridos y de encender la tira led que indica estado de temperatura.  <br /></td></tr>
+<tr class="separator:abafd14d719f27a0ecd842a8d6c7cb662"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e3b530b57e397f13f97c14f6d1a5078" id="r_a5e3b530b57e397f13f97c14f6d1a5078"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5e3b530b57e397f13f97c14f6d1a5078">medirTask</a> ()</td></tr>
+<tr class="memdesc:a5e3b530b57e397f13f97c14f6d1a5078"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tarea encargada de medir las distintas variables, como temperatura, humedad y luz.  <br /></td></tr>
+<tr class="separator:a5e3b530b57e397f13f97c14f6d1a5078"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4081f91fa4b0e67722026880c48b1031" id="r_a4081f91fa4b0e67722026880c48b1031"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4081f91fa4b0e67722026880c48b1031">ProcesarTask</a> ()</td></tr>
+<tr class="memdesc:a4081f91fa4b0e67722026880c48b1031"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tarea encargada de procesar los datos medidos, calculando sus medias, máximos y mínimos.  <br /></td></tr>
+<tr class="separator:a4081f91fa4b0e67722026880c48b1031"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae44197ae799bb0b43eb1244719ecfc61" id="r_ae44197ae799bb0b43eb1244719ecfc61"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae44197ae799bb0b43eb1244719ecfc61">compararTask</a> ()</td></tr>
+<tr class="memdesc:ae44197ae799bb0b43eb1244719ecfc61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tarea encargada de comparar los datos sensados con los umbrales, y disparar una alerta cuando la medición de temperatura pase ciertos umbrales.  <br /></td></tr>
+<tr class="separator:ae44197ae799bb0b43eb1244719ecfc61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a630544a7f0a2cc40d8a7fefab7e2fe70" id="r_a630544a7f0a2cc40d8a7fefab7e2fe70"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a630544a7f0a2cc40d8a7fefab7e2fe70">app_main</a> (<a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">void</a>)</td></tr>
+<tr class="separator:a630544a7f0a2cc40d8a7fefab7e2fe70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a8caad72777583d413f6cbcf1ec756dca" id="r_a8caad72777583d413f6cbcf1ec756dca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">TaskHandle_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8caad72777583d413f6cbcf1ec756dca">comparar_task_handle</a> = <a class="el" href="ili9341_8c.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td></tr>
+<tr class="memdesc:a8caad72777583d413f6cbcf1ec756dca"><td class="mdescLeft">&#160;</td><td class="mdescRight">variable de tipo TaskHandle_t que se utiliza para manejar la tarea comparar.  <br /></td></tr>
+<tr class="separator:a8caad72777583d413f6cbcf1ec756dca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1316d5b1a3e4d9dee5085faf3b582e40" id="r_a1316d5b1a3e4d9dee5085faf3b582e40"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">TaskHandle_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1316d5b1a3e4d9dee5085faf3b582e40">mostrar_task_handle</a> = <a class="el" href="ili9341_8c.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td></tr>
+<tr class="memdesc:a1316d5b1a3e4d9dee5085faf3b582e40"><td class="mdescLeft">&#160;</td><td class="mdescRight">variable de tipo TaskHandle_t que se utiliza para manejar la tarea mostrar.  <br /></td></tr>
+<tr class="separator:a1316d5b1a3e4d9dee5085faf3b582e40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc603ff10f1315cc3d84f146d9f975be" id="r_acc603ff10f1315cc3d84f146d9f975be"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">TaskHandle_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acc603ff10f1315cc3d84f146d9f975be">procesar_task_handle</a> = <a class="el" href="ili9341_8c.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td></tr>
+<tr class="memdesc:acc603ff10f1315cc3d84f146d9f975be"><td class="mdescLeft">&#160;</td><td class="mdescRight">variable de tipo TaskHandle_t que se utiliza para manejar la tarea procesar.  <br /></td></tr>
+<tr class="separator:acc603ff10f1315cc3d84f146d9f975be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b0cb40d7a31ce7e8b3f906fd55df312" id="r_a2b0cb40d7a31ce7e8b3f906fd55df312"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">TaskHandle_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2b0cb40d7a31ce7e8b3f906fd55df312">medir_task_handle</a> = <a class="el" href="ili9341_8c.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td></tr>
+<tr class="memdesc:a2b0cb40d7a31ce7e8b3f906fd55df312"><td class="mdescLeft">&#160;</td><td class="mdescRight">variable de tipo TaskHandle_t que se utiliza para manejar la tarea medir.  <br /></td></tr>
+<tr class="separator:a2b0cb40d7a31ce7e8b3f906fd55df312"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8347aeb522c9e13e9f376640fad780e7" id="r_a8347aeb522c9e13e9f376640fad780e7"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">temperatura</a></td></tr>
+<tr class="memdesc:a8347aeb522c9e13e9f376640fad780e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable utilizada para almacenar en tiempo real la temperatura medida.  <br /></td></tr>
+<tr class="separator:a8347aeb522c9e13e9f376640fad780e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2784fe3ecc015ff484f8156eb30e87e6" id="r_a2784fe3ecc015ff484f8156eb30e87e6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">uint16_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2784fe3ecc015ff484f8156eb30e87e6">nivel_luz</a> = 0</td></tr>
+<tr class="memdesc:a2784fe3ecc015ff484f8156eb30e87e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable utilizada para almacenar en tiempo real el nivel de luz medida.  <br /></td></tr>
+<tr class="separator:a2784fe3ecc015ff484f8156eb30e87e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34280c09711b9f4f72211e5c467b57bf" id="r_a34280c09711b9f4f72211e5c467b57bf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">float</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a34280c09711b9f4f72211e5c467b57bf">humedad</a></td></tr>
+<tr class="memdesc:a34280c09711b9f4f72211e5c467b57bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable utilizada para almacenar en tiempo real la humedad medida.  <br /></td></tr>
+<tr class="separator:a34280c09711b9f4f72211e5c467b57bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe5dd7703a963f252b35060151d25984" id="r_afe5dd7703a963f252b35060151d25984"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afe5dd7703a963f252b35060151d25984">Encendido</a> = <a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">false</a></td></tr>
+<tr class="memdesc:afe5dd7703a963f252b35060151d25984"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable booleana que representa el estado del sistema de monitoreo.  <br /></td></tr>
+<tr class="separator:afe5dd7703a963f252b35060151d25984"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a27c3bcaf8527c454db73b1e96debe0" id="r_a2a27c3bcaf8527c454db73b1e96debe0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">float</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2a27c3bcaf8527c454db73b1e96debe0">promedio_temperatura</a> = 0</td></tr>
+<tr class="memdesc:a2a27c3bcaf8527c454db73b1e96debe0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable encargada de almacenar el promedio de temperatura medido en un cierto intervalo de tiempo.  <br /></td></tr>
+<tr class="separator:a2a27c3bcaf8527c454db73b1e96debe0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6bce198d78662511be62c4085cbf5705" id="r_a6bce198d78662511be62c4085cbf5705"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">float</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6bce198d78662511be62c4085cbf5705">promedio_humedad</a> = 0</td></tr>
+<tr class="memdesc:a6bce198d78662511be62c4085cbf5705"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable encargada de almacenar el promedio de humedad medido en un cierto intervalo de tiempo.  <br /></td></tr>
+<tr class="separator:a6bce198d78662511be62c4085cbf5705"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae4ace65c1301fe0426a1e4266cef309" id="r_aae4ace65c1301fe0426a1e4266cef309"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">uint16_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aae4ace65c1301fe0426a1e4266cef309">promedio_luz</a> = 0</td></tr>
+<tr class="memdesc:aae4ace65c1301fe0426a1e4266cef309"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable encargada de almacenar el promedio de luz medido en un cierto intervalo de tiempo.  <br /></td></tr>
+<tr class="separator:aae4ace65c1301fe0426a1e4266cef309"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a353201298a7cbb1c469b90e4bb7358d5" id="r_a353201298a7cbb1c469b90e4bb7358d5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">float</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a353201298a7cbb1c469b90e4bb7358d5">maximo_temperatura</a> = 0</td></tr>
+<tr class="memdesc:a353201298a7cbb1c469b90e4bb7358d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable encargada de almacenar el máximo valor de temperatura medido en el tiempo en el cual se registraron los datos.  <br /></td></tr>
+<tr class="separator:a353201298a7cbb1c469b90e4bb7358d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48d00a8140b73b7e412b662db31a7218" id="r_a48d00a8140b73b7e412b662db31a7218"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">float</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a48d00a8140b73b7e412b662db31a7218">minimo_temperatura</a> = 100</td></tr>
+<tr class="memdesc:a48d00a8140b73b7e412b662db31a7218"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable encargada de almacenar el mínimo valor de temperatura medido en el tiempo en el cual se registraron los datos.  <br /></td></tr>
+<tr class="separator:a48d00a8140b73b7e412b662db31a7218"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af75d69ae327f4e816d81b7ce1f1e5bbc" id="r_af75d69ae327f4e816d81b7ce1f1e5bbc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">float</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af75d69ae327f4e816d81b7ce1f1e5bbc">acumulador_temperatura</a> = 0</td></tr>
+<tr class="memdesc:af75d69ae327f4e816d81b7ce1f1e5bbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable auxiliar encargada de almacenar el valor acumulado de temperatura mientras la aplicación se encuentra funcionando.  <br /></td></tr>
+<tr class="separator:af75d69ae327f4e816d81b7ce1f1e5bbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a073ac5e3ffff9979583d5f436b4e06ed" id="r_a073ac5e3ffff9979583d5f436b4e06ed"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">float</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a073ac5e3ffff9979583d5f436b4e06ed">acumulador_humedad</a> = 0</td></tr>
+<tr class="memdesc:a073ac5e3ffff9979583d5f436b4e06ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable auxiliar encargada de almacenar el valor acumulado de humedad mientras la aplicación se encuentra funcionando.  <br /></td></tr>
+<tr class="separator:a073ac5e3ffff9979583d5f436b4e06ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab97f0fae7d3c187607c8be98cb486016" id="r_ab97f0fae7d3c187607c8be98cb486016"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">uint8_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab97f0fae7d3c187607c8be98cb486016">contador_medicion</a> = 0</td></tr>
+<tr class="memdesc:ab97f0fae7d3c187607c8be98cb486016"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable auxiliar encargada de almacenar el número de ciclos en los cuales se realizaron mediciones. Se utilizan para calcular el promedio.  <br /></td></tr>
+<tr class="separator:ab97f0fae7d3c187607c8be98cb486016"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77d3a0c1842e7888c4e745b66b024860" id="r_a77d3a0c1842e7888c4e745b66b024860"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">uint16_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a77d3a0c1842e7888c4e745b66b024860">acumulador_luz</a> = 0</td></tr>
+<tr class="memdesc:a77d3a0c1842e7888c4e745b66b024860"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable auxiliar encargada de almacenar el valor acumulado de luz mientras la aplicación se encuentra funcionando.  <br /></td></tr>
+<tr class="separator:a77d3a0c1842e7888c4e745b66b024860"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5a9bc215725bf823278a43ff97726ac" id="r_af5a9bc215725bf823278a43ff97726ac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___neo_pixel___stripe.html#ga46c58082e9d85e6503e36f0e2306bb39">neopixel_color_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af5a9bc215725bf823278a43ff97726ac">arreglo_colores_dinamico</a> [8]</td></tr>
+<tr class="memdesc:af5a9bc215725bf823278a43ff97726ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Matriz auxiliar de colores en la cual los valores van a variar en función de las temperaturas medidas.  <br /></td></tr>
+<tr class="separator:af5a9bc215725bf823278a43ff97726ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Documentación de «define»</h2>
+<a id="af7987f207dd9c6d153beed96f092cb65" name="af7987f207dd9c6d153beed96f092cb65"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af7987f207dd9c6d153beed96f092cb65">&#9670;&#160;</a></span>GPIO_BUZZER</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#<a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">define</a> GPIO_BUZZER&#160;&#160;&#160;<a class="el" href="group___g_i_o_p.html#ggaf65604147d0244c9b13cfdc865ad5393a0e8bab7ea873c22eb90aa81116208917">GPIO_18</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00054">54</a> del archivo <a class="el" href="_proyecto___integrador___colazo_8c_source.html">Proyecto_Integrador_Colazo.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00482">app_main()</a>.</p>
+
+</div>
+</div>
+<a id="ae525dec8a83d13b48c605928cfb17873" name="ae525dec8a83d13b48c605928cfb17873"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae525dec8a83d13b48c605928cfb17873">&#9670;&#160;</a></span>GPIO_NEO_PIXEL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#<a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">define</a> GPIO_NEO_PIXEL&#160;&#160;&#160;<a class="el" href="group___g_i_o_p.html#ggaf65604147d0244c9b13cfdc865ad5393a8bdaec9182fb8ab2106d5c67f3eabd2d">GPIO_9</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00053">53</a> del archivo <a class="el" href="_proyecto___integrador___colazo_8c_source.html">Proyecto_Integrador_Colazo.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00482">app_main()</a>.</p>
+
+</div>
+</div>
+<a id="a7005226e20f02bc769e6b88d1367b3b2" name="a7005226e20f02bc769e6b88d1367b3b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7005226e20f02bc769e6b88d1367b3b2">&#9670;&#160;</a></span>GPIO_SENSOR_HUMEDAD_TEMPERATURA</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#<a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">define</a> GPIO_SENSOR_HUMEDAD_TEMPERATURA&#160;&#160;&#160;<a class="el" href="group___g_i_o_p.html#ggaf65604147d0244c9b13cfdc865ad5393a426d08ab85ab3aebbb53eed1a32dfb71">GPIO_3</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00052">52</a> del archivo <a class="el" href="_proyecto___integrador___colazo_8c_source.html">Proyecto_Integrador_Colazo.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00482">app_main()</a>.</p>
+
+</div>
+</div>
+<a id="a15ff5dc1cab223ac32ea1945b74e25f8" name="a15ff5dc1cab223ac32ea1945b74e25f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15ff5dc1cab223ac32ea1945b74e25f8">&#9670;&#160;</a></span>NEOPIXEL_COLOR_OFF</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#<a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">define</a> NEOPIXEL_COLOR_OFF&#160;&#160;&#160;0x00000000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00058">58</a> del archivo <a class="el" href="_proyecto___integrador___colazo_8c_source.html">Proyecto_Integrador_Colazo.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00244">mostrarTask()</a>.</p>
+
+</div>
+</div>
+<a id="aa65fb7595198f23d285838ccc34ad515" name="aa65fb7595198f23d285838ccc34ad515"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa65fb7595198f23d285838ccc34ad515">&#9670;&#160;</a></span>NUMERO_TIRA_PIXEL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#<a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">define</a> NUMERO_TIRA_PIXEL&#160;&#160;&#160;8</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00055">55</a> del archivo <a class="el" href="_proyecto___integrador___colazo_8c_source.html">Proyecto_Integrador_Colazo.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00482">app_main()</a>.</p>
+
+</div>
+</div>
+<a id="a3085f4877388c18954b353865f58cd56" name="a3085f4877388c18954b353865f58cd56"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3085f4877388c18954b353865f58cd56">&#9670;&#160;</a></span>PERIODO</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#<a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">define</a> PERIODO&#160;&#160;&#160;1000000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00051">51</a> del archivo <a class="el" href="_proyecto___integrador___colazo_8c_source.html">Proyecto_Integrador_Colazo.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00482">app_main()</a>.</p>
+
+</div>
+</div>
+<a id="a20c3b97f32214e453a4723e0d62fa8a5" name="a20c3b97f32214e453a4723e0d62fa8a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a20c3b97f32214e453a4723e0d62fa8a5">&#9670;&#160;</a></span>UMBRAL_INFERIOR_TEMPERATURA</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#<a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">define</a> UMBRAL_INFERIOR_TEMPERATURA&#160;&#160;&#160;2.0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00057">57</a> del archivo <a class="el" href="_proyecto___integrador___colazo_8c_source.html">Proyecto_Integrador_Colazo.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00459">compararTask()</a>.</p>
+
+</div>
+</div>
+<a id="a5826ee125e3f4c044b163b10a790b462" name="a5826ee125e3f4c044b163b10a790b462"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5826ee125e3f4c044b163b10a790b462">&#9670;&#160;</a></span>UMBRAL_SUPERIOR_TEMPERATURA</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#<a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">define</a> UMBRAL_SUPERIOR_TEMPERATURA&#160;&#160;&#160;8.0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00056">56</a> del archivo <a class="el" href="_proyecto___integrador___colazo_8c_source.html">Proyecto_Integrador_Colazo.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00459">compararTask()</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Documentación de funciones</h2>
+<a id="a630544a7f0a2cc40d8a7fefab7e2fe70" name="a630544a7f0a2cc40d8a7fefab7e2fe70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a630544a7f0a2cc40d8a7fefab7e2fe70">&#9670;&#160;</a></span>app_main()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">void</a> app_main </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">void</a></td>          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00482">482</a> del archivo <a class="el" href="_proyecto___integrador___colazo_8c_source.html">Proyecto_Integrador_Colazo.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="analog__io__mcu_8h_source.html#l00038">ADC_SINGLE</a>, <a class="el" href="analog__io__mcu_8c_source.html#l00045">AnalogInputInit()</a>, <a class="el" href="ble__mcu_8c_source.html#l00452">BleInit()</a>, <a class="el" href="buzzer_8c_source.html#l00043">BuzzerInit()</a>, <a class="el" href="analog__io__mcu_8h_source.html#l00031">CH0</a>, <a class="el" href="analog__io__mcu_8h_source.html#l00032">CH1</a>, <a class="el" href="analog__io__mcu_8h_source.html#l00033">CH2</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00065">comparar_task_handle</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00459">compararTask()</a>, <a class="el" href="ble__mcu_8h_source.html#l00044">ble_config_t::device_name</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00231">FuncTimerGlobal()</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00054">GPIO_BUZZER</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00053">GPIO_NEO_PIXEL</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00052">GPIO_SENSOR_HUMEDAD_TEMPERATURA</a>, <a class="el" href="analog__io__mcu_8h_source.html#l00049">analog_input_config_t::input</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00167">leerDato()</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00080">medir_task_handle</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00369">medirTask()</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00070">mostrar_task_handle</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00244">mostrarTask()</a>, <a class="el" href="neopixel__stripe_8c_source.html#l00038">NeoPixelInit()</a>, <a class="el" href="ili9341_8c_source.html#l00019">NULL</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00055">NUMERO_TIRA_PIXEL</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00051">PERIODO</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00075">procesar_task_handle</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00396">ProcesarTask()</a>, <a class="el" href="_si7007_8h_source.html#l00039">Si7007_config::select</a>, <a class="el" href="_si7007_8c_source.html#l00082">Si7007Init()</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00085">temperatura</a>, <a class="el" href="timer__mcu_8h_source.html#l00040">timer_config_t::timer</a>, <a class="el" href="timer__mcu_8h_source.html#l00034">TIMER_C</a>, <a class="el" href="timer__mcu_8c_source.html#l00055">TimerInit()</a> y <a class="el" href="timer__mcu_8c_source.html#l00110">TimerStart()</a>.</p>
+
+</div>
+</div>
+<a id="ae44197ae799bb0b43eb1244719ecfc61" name="ae44197ae799bb0b43eb1244719ecfc61"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae44197ae799bb0b43eb1244719ecfc61">&#9670;&#160;</a></span>compararTask()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">void</a> compararTask </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tarea encargada de comparar los datos sensados con los umbrales, y disparar una alerta cuando la medición de temperatura pase ciertos umbrales. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00459">459</a> del archivo <a class="el" href="_proyecto___integrador___colazo_8c_source.html">Proyecto_Integrador_Colazo.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="buzzer_8c_source.html#l00053">BuzzerOff()</a>, <a class="el" href="buzzer_8c_source.html#l00061">BuzzerPlayTone()</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00100">Encendido</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00085">temperatura</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00057">UMBRAL_INFERIOR_TEMPERATURA</a> y <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00056">UMBRAL_SUPERIOR_TEMPERATURA</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00482">app_main()</a>.</p>
+
+</div>
+</div>
+<a id="a827e080d6beab59d3b6f5c2e6e828a04" name="a827e080d6beab59d3b6f5c2e6e828a04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a827e080d6beab59d3b6f5c2e6e828a04">&#9670;&#160;</a></span>FuncTimerGlobal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">void</a> FuncTimerGlobal </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00231">231</a> del archivo <a class="el" href="_proyecto___integrador___colazo_8c_source.html">Proyecto_Integrador_Colazo.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00065">comparar_task_handle</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00080">medir_task_handle</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00070">mostrar_task_handle</a> y <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00075">procesar_task_handle</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00482">app_main()</a>.</p>
+
+</div>
+</div>
+<a id="a4feabe4c20d5c713954f1c0392501151" name="a4feabe4c20d5c713954f1c0392501151"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4feabe4c20d5c713954f1c0392501151">&#9670;&#160;</a></span>leerDato()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">void</a> leerDato </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">uint8_t</a> *</td>          <td class="paramname"><span class="paramname"><em>dato</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Función encargada de recibir los datos provenientes de la conexión bluetooth de baja <a class="el" href="#a8347aeb522c9e13e9f376640fad780e7" title="Variable utilizada para almacenar en tiempo real la temperatura medida.">energía(ble)</a>. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dato</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Dato recibido mediante la conexión bluetooth de baja <a class="el" href="#a8347aeb522c9e13e9f376640fad780e7" title="Variable utilizada para almacenar en tiempo real la temperatura medida.">energía(ble)</a>. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00167">167</a> del archivo <a class="el" href="_proyecto___integrador___colazo_8c_source.html">Proyecto_Integrador_Colazo.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00135">acumulador_humedad</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00145">acumulador_luz</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00130">acumulador_temperatura</a>, <a class="el" href="ble__mcu_8c_source.html#l00544">BleSendString()</a>, <a class="el" href="buzzer_8c_source.html#l00053">BuzzerOff()</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00140">contador_medicion</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00100">Encendido</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00120">maximo_temperatura</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00125">minimo_temperatura</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00110">promedio_humedad</a> y <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00105">promedio_temperatura</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00482">app_main()</a>.</p>
+
+</div>
+</div>
+<a id="a5e3b530b57e397f13f97c14f6d1a5078" name="a5e3b530b57e397f13f97c14f6d1a5078"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e3b530b57e397f13f97c14f6d1a5078">&#9670;&#160;</a></span>medirTask()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">void</a> medirTask </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tarea encargada de medir las distintas variables, como temperatura, humedad y luz. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00369">369</a> del archivo <a class="el" href="_proyecto___integrador___colazo_8c_source.html">Proyecto_Integrador_Colazo.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00135">acumulador_humedad</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00145">acumulador_luz</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00130">acumulador_temperatura</a>, <a class="el" href="analog__io__mcu_8c_source.html#l00105">AnalogInputReadSingle()</a>, <a class="el" href="analog__io__mcu_8h_source.html#l00031">CH0</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00140">contador_medicion</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00100">Encendido</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00095">humedad</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00090">nivel_luz</a>, <a class="el" href="_si7007_8c_source.html#l00112">Si7007MeasureHumidity()</a>, <a class="el" href="_si7007_8c_source.html#l00099">Si7007MeasureTemperature()</a> y <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00085">temperatura</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00482">app_main()</a>.</p>
+
+</div>
+</div>
+<a id="abafd14d719f27a0ecd842a8d6c7cb662" name="abafd14d719f27a0ecd842a8d6c7cb662"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abafd14d719f27a0ecd842a8d6c7cb662">&#9670;&#160;</a></span>mostrarTask()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">void</a> mostrarTask </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tarea encargada de mostrar los valores medidos de temperatura, humedad y luz, además de promedios, máximos y mínimos cuando sean requeridos y de encender la tira led que indica estado de temperatura. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00244">244</a> del archivo <a class="el" href="_proyecto___integrador___colazo_8c_source.html">Proyecto_Integrador_Colazo.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00155">arreglo_colores_dinamico</a>, <a class="el" href="ble__mcu_8c_source.html#l00544">BleSendString()</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00100">Encendido</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00095">humedad</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00058">NEOPIXEL_COLOR_OFF</a>, <a class="el" href="neopixel__stripe_8c_source.html#l00044">NeoPixelAllOff()</a>, <a class="el" href="neopixel__stripe_8c_source.html#l00107">NeoPixelBrightness()</a>, <a class="el" href="neopixel__stripe_8c_source.html#l00070">NeoPixelSetArray()</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00090">nivel_luz</a> y <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00085">temperatura</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00482">app_main()</a>.</p>
+
+</div>
+</div>
+<a id="a4081f91fa4b0e67722026880c48b1031" name="a4081f91fa4b0e67722026880c48b1031"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4081f91fa4b0e67722026880c48b1031">&#9670;&#160;</a></span>ProcesarTask()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">void</a> ProcesarTask </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tarea encargada de procesar los datos medidos, calculando sus medias, máximos y mínimos. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00396">396</a> del archivo <a class="el" href="_proyecto___integrador___colazo_8c_source.html">Proyecto_Integrador_Colazo.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00135">acumulador_humedad</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00145">acumulador_luz</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00130">acumulador_temperatura</a>, <a class="el" href="ble__mcu_8c_source.html#l00544">BleSendString()</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00140">contador_medicion</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00100">Encendido</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00120">maximo_temperatura</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00125">minimo_temperatura</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00110">promedio_humedad</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00115">promedio_luz</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00105">promedio_temperatura</a> y <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00085">temperatura</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00482">app_main()</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Documentación de variables</h2>
+<a id="a073ac5e3ffff9979583d5f436b4e06ed" name="a073ac5e3ffff9979583d5f436b4e06ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a073ac5e3ffff9979583d5f436b4e06ed">&#9670;&#160;</a></span>acumulador_humedad</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">float</a> acumulador_humedad = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Variable auxiliar encargada de almacenar el valor acumulado de humedad mientras la aplicación se encuentra funcionando. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00135">135</a> del archivo <a class="el" href="_proyecto___integrador___colazo_8c_source.html">Proyecto_Integrador_Colazo.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00167">leerDato()</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00369">medirTask()</a> y <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00396">ProcesarTask()</a>.</p>
+
+</div>
+</div>
+<a id="a77d3a0c1842e7888c4e745b66b024860" name="a77d3a0c1842e7888c4e745b66b024860"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77d3a0c1842e7888c4e745b66b024860">&#9670;&#160;</a></span>acumulador_luz</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">uint16_t</a> acumulador_luz = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Variable auxiliar encargada de almacenar el valor acumulado de luz mientras la aplicación se encuentra funcionando. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00145">145</a> del archivo <a class="el" href="_proyecto___integrador___colazo_8c_source.html">Proyecto_Integrador_Colazo.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00167">leerDato()</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00369">medirTask()</a> y <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00396">ProcesarTask()</a>.</p>
+
+</div>
+</div>
+<a id="af75d69ae327f4e816d81b7ce1f1e5bbc" name="af75d69ae327f4e816d81b7ce1f1e5bbc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af75d69ae327f4e816d81b7ce1f1e5bbc">&#9670;&#160;</a></span>acumulador_temperatura</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">float</a> acumulador_temperatura = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Variable auxiliar encargada de almacenar el valor acumulado de temperatura mientras la aplicación se encuentra funcionando. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00130">130</a> del archivo <a class="el" href="_proyecto___integrador___colazo_8c_source.html">Proyecto_Integrador_Colazo.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00167">leerDato()</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00369">medirTask()</a> y <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00396">ProcesarTask()</a>.</p>
+
+</div>
+</div>
+<a id="af5a9bc215725bf823278a43ff97726ac" name="af5a9bc215725bf823278a43ff97726ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5a9bc215725bf823278a43ff97726ac">&#9670;&#160;</a></span>arreglo_colores_dinamico</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___neo_pixel___stripe.html#ga46c58082e9d85e6503e36f0e2306bb39">neopixel_color_t</a> arreglo_colores_dinamico[8]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Valor inicial:</b><div class="fragment"><div class="line">= {<a class="code hl_define" href="group___neo_pixel___stripe.html#gac8188c114d2342b3ca60466df01c7111">NEOPIXEL_COLOR_GREEN</a>, <a class="code hl_define" href="group___neo_pixel___stripe.html#gac8188c114d2342b3ca60466df01c7111">NEOPIXEL_COLOR_GREEN</a>, <a class="code hl_define" href="group___neo_pixel___stripe.html#gafac09aef2fe0017a3bbc6e578c062365">NEOPIXEL_COLOR_LGREEN</a>, <a class="code hl_define" href="group___neo_pixel___stripe.html#ga94c4bcd376cbef7becd93531c1031df6">NEOPIXEL_COLOR_YELLOW</a>,</div>
+<div class="line">                                                <a class="code hl_define" href="group___neo_pixel___stripe.html#ga94c4bcd376cbef7becd93531c1031df6">NEOPIXEL_COLOR_YELLOW</a>, <a class="code hl_define" href="group___neo_pixel___stripe.html#gad01b5463a5171bb2fdeab894b86131b5">NEOPIXEL_COLOR_ORANGE</a>, <a class="code hl_define" href="group___neo_pixel___stripe.html#ga2e1dcc1fe1f1ec8488bc4185597108f2">NEOPIXEL_COLOR_RED</a>, <a class="code hl_define" href="group___neo_pixel___stripe.html#ga2e1dcc1fe1f1ec8488bc4185597108f2">NEOPIXEL_COLOR_RED</a>}</div>
+<div class="ttc" id="agroup___neo_pixel___stripe_html_ga2e1dcc1fe1f1ec8488bc4185597108f2"><div class="ttname"><a href="group___neo_pixel___stripe.html#ga2e1dcc1fe1f1ec8488bc4185597108f2">NEOPIXEL_COLOR_RED</a></div><div class="ttdeci">#define NEOPIXEL_COLOR_RED</div><div class="ttdef"><b>Definition</b> <a href="neopixel__stripe_8h_source.html#l00037">neopixel_stripe.h:37</a></div></div>
+<div class="ttc" id="agroup___neo_pixel___stripe_html_ga94c4bcd376cbef7becd93531c1031df6"><div class="ttname"><a href="group___neo_pixel___stripe.html#ga94c4bcd376cbef7becd93531c1031df6">NEOPIXEL_COLOR_YELLOW</a></div><div class="ttdeci">#define NEOPIXEL_COLOR_YELLOW</div><div class="ttdef"><b>Definition</b> <a href="neopixel__stripe_8h_source.html#l00039">neopixel_stripe.h:39</a></div></div>
+<div class="ttc" id="agroup___neo_pixel___stripe_html_gac8188c114d2342b3ca60466df01c7111"><div class="ttname"><a href="group___neo_pixel___stripe.html#gac8188c114d2342b3ca60466df01c7111">NEOPIXEL_COLOR_GREEN</a></div><div class="ttdeci">#define NEOPIXEL_COLOR_GREEN</div><div class="ttdef"><b>Definition</b> <a href="neopixel__stripe_8h_source.html#l00041">neopixel_stripe.h:41</a></div></div>
+<div class="ttc" id="agroup___neo_pixel___stripe_html_gad01b5463a5171bb2fdeab894b86131b5"><div class="ttname"><a href="group___neo_pixel___stripe.html#gad01b5463a5171bb2fdeab894b86131b5">NEOPIXEL_COLOR_ORANGE</a></div><div class="ttdeci">#define NEOPIXEL_COLOR_ORANGE</div><div class="ttdef"><b>Definition</b> <a href="neopixel__stripe_8h_source.html#l00038">neopixel_stripe.h:38</a></div></div>
+<div class="ttc" id="agroup___neo_pixel___stripe_html_gafac09aef2fe0017a3bbc6e578c062365"><div class="ttname"><a href="group___neo_pixel___stripe.html#gafac09aef2fe0017a3bbc6e578c062365">NEOPIXEL_COLOR_LGREEN</a></div><div class="ttdeci">#define NEOPIXEL_COLOR_LGREEN</div><div class="ttdef"><b>Definition</b> <a href="neopixel__stripe_8h_source.html#l00040">neopixel_stripe.h:40</a></div></div>
+</div><!-- fragment -->
+<p>Matriz auxiliar de colores en la cual los valores van a variar en función de las temperaturas medidas. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00155">155</a> del archivo <a class="el" href="_proyecto___integrador___colazo_8c_source.html">Proyecto_Integrador_Colazo.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00244">mostrarTask()</a>.</p>
+
+</div>
+</div>
+<a id="a8caad72777583d413f6cbcf1ec756dca" name="a8caad72777583d413f6cbcf1ec756dca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8caad72777583d413f6cbcf1ec756dca">&#9670;&#160;</a></span>comparar_task_handle</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">TaskHandle_t</a> comparar_task_handle = <a class="el" href="ili9341_8c.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>variable de tipo TaskHandle_t que se utiliza para manejar la tarea comparar. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00065">65</a> del archivo <a class="el" href="_proyecto___integrador___colazo_8c_source.html">Proyecto_Integrador_Colazo.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00482">app_main()</a> y <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00231">FuncTimerGlobal()</a>.</p>
+
+</div>
+</div>
+<a id="ab97f0fae7d3c187607c8be98cb486016" name="ab97f0fae7d3c187607c8be98cb486016"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab97f0fae7d3c187607c8be98cb486016">&#9670;&#160;</a></span>contador_medicion</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">uint8_t</a> contador_medicion = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Variable auxiliar encargada de almacenar el número de ciclos en los cuales se realizaron mediciones. Se utilizan para calcular el promedio. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00140">140</a> del archivo <a class="el" href="_proyecto___integrador___colazo_8c_source.html">Proyecto_Integrador_Colazo.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00167">leerDato()</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00369">medirTask()</a> y <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00396">ProcesarTask()</a>.</p>
+
+</div>
+</div>
+<a id="afe5dd7703a963f252b35060151d25984" name="afe5dd7703a963f252b35060151d25984"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe5dd7703a963f252b35060151d25984">&#9670;&#160;</a></span>Encendido</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">bool</a> Encendido = <a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">false</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Variable booleana que representa el estado del sistema de monitoreo. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00100">100</a> del archivo <a class="el" href="_proyecto___integrador___colazo_8c_source.html">Proyecto_Integrador_Colazo.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00459">compararTask()</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00167">leerDato()</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00369">medirTask()</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00244">mostrarTask()</a> y <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00396">ProcesarTask()</a>.</p>
+
+</div>
+</div>
+<a id="a34280c09711b9f4f72211e5c467b57bf" name="a34280c09711b9f4f72211e5c467b57bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34280c09711b9f4f72211e5c467b57bf">&#9670;&#160;</a></span>humedad</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">float</a> humedad</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Variable utilizada para almacenar en tiempo real la humedad medida. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00095">95</a> del archivo <a class="el" href="_proyecto___integrador___colazo_8c_source.html">Proyecto_Integrador_Colazo.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00369">medirTask()</a> y <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00244">mostrarTask()</a>.</p>
+
+</div>
+</div>
+<a id="a353201298a7cbb1c469b90e4bb7358d5" name="a353201298a7cbb1c469b90e4bb7358d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a353201298a7cbb1c469b90e4bb7358d5">&#9670;&#160;</a></span>maximo_temperatura</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">float</a> maximo_temperatura = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Variable encargada de almacenar el máximo valor de temperatura medido en el tiempo en el cual se registraron los datos. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00120">120</a> del archivo <a class="el" href="_proyecto___integrador___colazo_8c_source.html">Proyecto_Integrador_Colazo.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00167">leerDato()</a> y <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00396">ProcesarTask()</a>.</p>
+
+</div>
+</div>
+<a id="a2b0cb40d7a31ce7e8b3f906fd55df312" name="a2b0cb40d7a31ce7e8b3f906fd55df312"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b0cb40d7a31ce7e8b3f906fd55df312">&#9670;&#160;</a></span>medir_task_handle</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">TaskHandle_t</a> medir_task_handle = <a class="el" href="ili9341_8c.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>variable de tipo TaskHandle_t que se utiliza para manejar la tarea medir. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00080">80</a> del archivo <a class="el" href="_proyecto___integrador___colazo_8c_source.html">Proyecto_Integrador_Colazo.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00482">app_main()</a> y <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00231">FuncTimerGlobal()</a>.</p>
+
+</div>
+</div>
+<a id="a48d00a8140b73b7e412b662db31a7218" name="a48d00a8140b73b7e412b662db31a7218"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48d00a8140b73b7e412b662db31a7218">&#9670;&#160;</a></span>minimo_temperatura</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">float</a> minimo_temperatura = 100</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Variable encargada de almacenar el mínimo valor de temperatura medido en el tiempo en el cual se registraron los datos. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00125">125</a> del archivo <a class="el" href="_proyecto___integrador___colazo_8c_source.html">Proyecto_Integrador_Colazo.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00167">leerDato()</a> y <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00396">ProcesarTask()</a>.</p>
+
+</div>
+</div>
+<a id="a1316d5b1a3e4d9dee5085faf3b582e40" name="a1316d5b1a3e4d9dee5085faf3b582e40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1316d5b1a3e4d9dee5085faf3b582e40">&#9670;&#160;</a></span>mostrar_task_handle</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">TaskHandle_t</a> mostrar_task_handle = <a class="el" href="ili9341_8c.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>variable de tipo TaskHandle_t que se utiliza para manejar la tarea mostrar. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00070">70</a> del archivo <a class="el" href="_proyecto___integrador___colazo_8c_source.html">Proyecto_Integrador_Colazo.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00482">app_main()</a> y <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00231">FuncTimerGlobal()</a>.</p>
+
+</div>
+</div>
+<a id="a2784fe3ecc015ff484f8156eb30e87e6" name="a2784fe3ecc015ff484f8156eb30e87e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2784fe3ecc015ff484f8156eb30e87e6">&#9670;&#160;</a></span>nivel_luz</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">uint16_t</a> nivel_luz = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Variable utilizada para almacenar en tiempo real el nivel de luz medida. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00090">90</a> del archivo <a class="el" href="_proyecto___integrador___colazo_8c_source.html">Proyecto_Integrador_Colazo.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00369">medirTask()</a> y <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00244">mostrarTask()</a>.</p>
+
+</div>
+</div>
+<a id="acc603ff10f1315cc3d84f146d9f975be" name="acc603ff10f1315cc3d84f146d9f975be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc603ff10f1315cc3d84f146d9f975be">&#9670;&#160;</a></span>procesar_task_handle</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">TaskHandle_t</a> procesar_task_handle = <a class="el" href="ili9341_8c.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>variable de tipo TaskHandle_t que se utiliza para manejar la tarea procesar. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00075">75</a> del archivo <a class="el" href="_proyecto___integrador___colazo_8c_source.html">Proyecto_Integrador_Colazo.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00482">app_main()</a> y <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00231">FuncTimerGlobal()</a>.</p>
+
+</div>
+</div>
+<a id="a6bce198d78662511be62c4085cbf5705" name="a6bce198d78662511be62c4085cbf5705"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6bce198d78662511be62c4085cbf5705">&#9670;&#160;</a></span>promedio_humedad</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">float</a> promedio_humedad = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Variable encargada de almacenar el promedio de humedad medido en un cierto intervalo de tiempo. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00110">110</a> del archivo <a class="el" href="_proyecto___integrador___colazo_8c_source.html">Proyecto_Integrador_Colazo.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00167">leerDato()</a> y <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00396">ProcesarTask()</a>.</p>
+
+</div>
+</div>
+<a id="aae4ace65c1301fe0426a1e4266cef309" name="aae4ace65c1301fe0426a1e4266cef309"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae4ace65c1301fe0426a1e4266cef309">&#9670;&#160;</a></span>promedio_luz</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">uint16_t</a> promedio_luz = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Variable encargada de almacenar el promedio de luz medido en un cierto intervalo de tiempo. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00115">115</a> del archivo <a class="el" href="_proyecto___integrador___colazo_8c_source.html">Proyecto_Integrador_Colazo.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00396">ProcesarTask()</a>.</p>
+
+</div>
+</div>
+<a id="a2a27c3bcaf8527c454db73b1e96debe0" name="a2a27c3bcaf8527c454db73b1e96debe0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a27c3bcaf8527c454db73b1e96debe0">&#9670;&#160;</a></span>promedio_temperatura</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a8347aeb522c9e13e9f376640fad780e7">float</a> promedio_temperatura = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Variable encargada de almacenar el promedio de temperatura medido en un cierto intervalo de tiempo. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00105">105</a> del archivo <a class="el" href="_proyecto___integrador___colazo_8c_source.html">Proyecto_Integrador_Colazo.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00167">leerDato()</a> y <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00396">ProcesarTask()</a>.</p>
+
+</div>
+</div>
+<a id="a8347aeb522c9e13e9f376640fad780e7" name="a8347aeb522c9e13e9f376640fad780e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8347aeb522c9e13e9f376640fad780e7">&#9670;&#160;</a></span>temperatura</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float temperatura</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Variable utilizada para almacenar en tiempo real la temperatura medida. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00085">85</a> del archivo <a class="el" href="_proyecto___integrador___colazo_8c_source.html">Proyecto_Integrador_Colazo.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="analog__io__mcu_8c_source.html#l00045">AnalogInputInit()</a>, <a class="el" href="analog__io__mcu_8c_source.html#l00105">AnalogInputReadSingle()</a>, <a class="el" href="analog__io__mcu_8c_source.html#l00095">AnalogOutputInit()</a>, <a class="el" href="analog__io__mcu_8c_source.html#l00140">AnalogOutputWrite()</a>, <a class="el" href="analog__io__mcu_8c_source.html#l00134">AnalogRaw2mV()</a>, <a class="el" href="servo__sg90_8c_source.html#l00022">Angle2DutyCicle()</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00482">app_main()</a>, <a class="el" href="ble__hid__mcu_8c_source.html#l01366">BleHidInit()</a>, <a class="el" href="ble__hid__mcu_8c_source.html#l01421">BleHidSendKeyboard()</a>, <a class="el" href="ble__hid__mcu_8c_source.html#l01443">BleHidSendMouse()</a>, <a class="el" href="ble__mcu_8c_source.html#l00452">BleInit()</a>, <a class="el" href="ble__mcu_8c_source.html#l00557">BleSendBuffer()</a>, <a class="el" href="ble__mcu_8c_source.html#l00534">BleSendByte()</a>, <a class="el" href="ble__mcu_8c_source.html#l00544">BleSendString()</a>, <a class="el" href="ble__mcu_8c_source.html#l00406">bluetooth_events_task()</a>, <a class="el" href="buzzer_8c_source.html#l00068">BuzzerPlayRtttl()</a>, <a class="el" href="buzzer_8c_source.html#l00061">BuzzerPlayTone()</a>, <a class="el" href="buzzer_8c_source.html#l00057">BuzzerSetFrec()</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00459">compararTask()</a>, <a class="el" href="delay__mcu_8c_source.html#l00063">DelayMs()</a>, <a class="el" href="delay__mcu_8c_source.html#l00039">DelaySec()</a>, <a class="el" href="delay__mcu_8c_source.html#l00087">DelayUs()</a>, <a class="el" href="ble__hid__mcu_8c_source.html#l01056">esp_hidd_prf_cb_hdl()</a>, <a class="el" href="ble__hid__mcu_8c_source.html#l01004">esp_hidd_profile_deinit()</a>, <a class="el" href="ble__hid__mcu_8c_source.html#l00991">esp_hidd_profile_init()</a>, <a class="el" href="ble__hid__mcu_8c_source.html#l00972">esp_hidd_register_callbacks()</a>, <a class="el" href="ili9341_8c_source.html#l00234">Fill()</a>, <a class="el" href="gpio__mcu_8c_source.html#l00105">GPIOActivInt()</a>, <a class="el" href="gpio__fast__out__mcu_8c_source.html#l00034">GPIOFastInit()</a>, <a class="el" href="gpio__fast__out__mcu_8c_source.html#l00054">GPIOFastWrite()</a>, <a class="el" href="gpio__mcu_8c_source.html#l00067">GPIOInit()</a>, <a class="el" href="gpio__mcu_8c_source.html#l00119">GPIOInputFilter()</a>, <a class="el" href="gpio__mcu_8c_source.html#l00086">GPIOOff()</a>, <a class="el" href="gpio__mcu_8c_source.html#l00081">GPIOOn()</a>, <a class="el" href="gpio__mcu_8c_source.html#l00101">GPIORead()</a>, <a class="el" href="gpio__mcu_8c_source.html#l00091">GPIOState()</a>, <a class="el" href="gpio__mcu_8c_source.html#l00096">GPIOToggle()</a>, <a class="el" href="hc__sr04_8c_source.html#l00034">HcSr04Init()</a>, <a class="el" href="hc__sr04_8c_source.html#l00045">HcSr04ReadDistanceInCentimeters()</a>, <a class="el" href="hc__sr04_8c_source.html#l00067">HcSr04ReadDistanceInInches()</a>, <a class="el" href="ble__hid__mcu_8c_source.html#l01038">hid_dev_register_reports()</a>, <a class="el" href="ble__hid__mcu_8c_source.html#l01043">hid_dev_send_report()</a>, <a class="el" href="ble__hid__mcu_8c_source.html#l01153">hidd_clcb_alloc()</a>, <a class="el" href="ble__hid__mcu_8c_source.html#l01167">hidd_clcb_dealloc()</a>, <a class="el" href="ble__hid__mcu_8c_source.html#l01222">hidd_get_attr_value()</a>, <a class="el" href="ble__hid__mcu_8c_source.html#l01143">hidd_le_create_service()</a>, <a class="el" href="ble__hid__mcu_8c_source.html#l01149">hidd_le_init()</a>, <a class="el" href="ble__hid__mcu_8c_source.html#l01207">hidd_register_cb()</a>, <a class="el" href="ble__hid__mcu_8c_source.html#l01212">hidd_set_attr_value()</a>, <a class="el" href="hx711_8c_source.html#l00133">HX711_getUnits()</a>, <a class="el" href="hx711_8c_source.html#l00128">HX711_getValue()</a>, <a class="el" href="hx711_8c_source.html#l00047">HX711_Init()</a>, <a class="el" href="hx711_8c_source.html#l00081">HX711_read()</a>, <a class="el" href="hx711_8c_source.html#l00117">HX711_readAverage()</a>, <a class="el" href="hx711_8c_source.html#l00062">HX711_setGain()</a>, <a class="el" href="hx711_8c_source.html#l00144">HX711_setScale()</a>, <a class="el" href="hx711_8c_source.html#l00138">HX711_tare()</a>, <a class="el" href="i2c__mcu_8c_source.html#l00034">I2C_initialize()</a>, <a class="el" href="i2c__mcu_8c_source.html#l00073">I2C_readBit()</a>, <a class="el" href="i2c__mcu_8c_source.html#l00091">I2C_readBits()</a>, <a class="el" href="i2c__mcu_8c_source.html#l00114">I2C_readByte()</a>, <a class="el" href="i2c__mcu_8c_source.html#l00126">I2C_readBytes()</a>, <a class="el" href="i2c__mcu_8c_source.html#l00260">I2C_readWord()</a>, <a class="el" href="i2c__mcu_8c_source.html#l00153">I2C_SelectRegister()</a>, <a class="el" href="i2c__mcu_8c_source.html#l00172">I2C_writeBit()</a>, <a class="el" href="i2c__mcu_8c_source.html#l00187">I2C_writeBits()</a>, <a class="el" href="i2c__mcu_8c_source.html#l00214">I2C_writeByte()</a>, <a class="el" href="i2c__mcu_8c_source.html#l00236">I2C_writeBytes()</a>, <a class="el" href="i2c__mcu_8c_source.html#l00146">I2C_writeWord()</a>, <a class="el" href="ili9341_8c_source.html#l00352">ILI9341DrawChar()</a>, <a class="el" href="ili9341_8c_source.html#l00613">ILI9341DrawCircle()</a>, <a class="el" href="ili9341_8c_source.html#l00649">ILI9341DrawFilledCircle()</a>, <a class="el" href="ili9341_8c_source.html#l00609">ILI9341DrawFilledRectangle()</a>, <a class="el" href="ili9341_8c_source.html#l00688">ILI9341DrawFilledTriangle()</a>, <a class="el" href="ili9341_8c_source.html#l00414">ILI9341DrawIcon()</a>, <a class="el" href="ili9341_8c_source.html#l00476">ILI9341DrawInt()</a>, <a class="el" href="ili9341_8c_source.html#l00537">ILI9341DrawLine()</a>, <a class="el" href="ili9341_8c_source.html#l00802">ILI9341DrawPicture()</a>, <a class="el" href="ili9341_8c_source.html#l00305">ILI9341DrawPixel()</a>, <a class="el" href="ili9341_8c_source.html#l00602">ILI9341DrawRectangle()</a>, <a class="el" href="ili9341_8c_source.html#l00491">ILI9341DrawString()</a>, <a class="el" href="ili9341_8c_source.html#l00682">ILI9341DrawTriangle()</a>, <a class="el" href="ili9341_8c_source.html#l00313">ILI9341Fill()</a>, <a class="el" href="ili9341_8c_source.html#l00524">ILI9341GetStringSize()</a>, <a class="el" href="ili9341_8c_source.html#l00272">ILI9341Init()</a>, <a class="el" href="ili9341_8c_source.html#l00317">ILI9341Rotate()</a>, <a class="el" href="buzzer_8c_source.html#l00035">isDigit()</a>, <a class="el" href="l293_8c_source.html#l00051">L293SetSpeed()</a>, <a class="el" href="lcditse0803_8c_source.html#l00029">LcdItsE0803BCDtoPin()</a>, <a class="el" href="lcditse0803_8c_source.html#l00054">LcdItsE0803Write()</a>, <a class="el" href="led_8c_source.html#l00065">LedOff()</a>, <a class="el" href="led_8c_source.html#l00046">LedOn()</a>, <a class="el" href="led_8c_source.html#l00113">LedsMask()</a>, <a class="el" href="led_8c_source.html#l00084">LedToggle()</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00369">medirTask()</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00244">mostrarTask()</a>, <a class="el" href="mpu6050_8c_source.html#l00044">MPU6050_Address()</a>, <a class="el" href="mpu6050_8c_source.html#l01822">MPU6050_getAcceleration()</a>, <a class="el" href="mpu6050_8c_source.html#l01833">MPU6050_getAccelerationX()</a>, <a class="el" href="mpu6050_8c_source.html#l01842">MPU6050_getAccelerationY()</a>, <a class="el" href="mpu6050_8c_source.html#l01851">MPU6050_getAccelerationZ()</a>, <a class="el" href="mpu6050_8c_source.html#l02011">MPU6050_getExternalSensorByte()</a>, <a class="el" href="mpu6050_8c_source.html#l02029">MPU6050_getExternalSensorDWord()</a>, <a class="el" href="mpu6050_8c_source.html#l02020">MPU6050_getExternalSensorWord()</a>, <a class="el" href="mpu6050_8c_source.html#l02692">MPU6050_getFIFOCount()</a>, <a class="el" href="mpu6050_8c_source.html#l01777">MPU6050_getMotion6()</a>, <a class="el" href="mpu6050_8c_source.html#l01761">MPU6050_getMotion9()</a>, <a class="el" href="mpu6050_8c_source.html#l01901">MPU6050_getRotation()</a>, <a class="el" href="mpu6050_8c_source.html#l01912">MPU6050_getRotationX()</a>, <a class="el" href="mpu6050_8c_source.html#l01921">MPU6050_getRotationY()</a>, <a class="el" href="mpu6050_8c_source.html#l01930">MPU6050_getRotationZ()</a>, <a class="el" href="mpu6050_8c_source.html#l00944">MPU6050_getSlaveAddress()</a>, <a class="el" href="mpu6050_8c_source.html#l01091">MPU6050_getSlaveDataLength()</a>, <a class="el" href="mpu6050_8c_source.html#l02164">MPU6050_getSlaveDelayEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l00992">MPU6050_getSlaveEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l00970">MPU6050_getSlaveRegister()</a>, <a class="el" href="mpu6050_8c_source.html#l01018">MPU6050_getSlaveWordByteSwap()</a>, <a class="el" href="mpu6050_8c_source.html#l01069">MPU6050_getSlaveWordGroupOffset()</a>, <a class="el" href="mpu6050_8c_source.html#l01043">MPU6050_getSlaveWriteMode()</a>, <a class="el" href="mpu6050_8c_source.html#l01862">MPU6050_getTemperature()</a>, <a class="el" href="mpu6050_8c_source.html#l00025">MPU6050_ReadRegister()</a>, <a class="el" href="mpu6050_8c_source.html#l02236">MPU6050_setAccelerometerPowerOnDelay()</a>, <a class="el" href="mpu6050_8c_source.html#l00081">MPU6050_setAuxVDDIOLevel()</a>, <a class="el" href="mpu6050_8c_source.html#l02527">MPU6050_setClockSource()</a>, <a class="el" href="mpu6050_8c_source.html#l00419">MPU6050_setDHPFMode()</a>, <a class="el" href="mpu6050_8c_source.html#l00159">MPU6050_setExternalFrameSync()</a>, <a class="el" href="mpu6050_8c_source.html#l02275">MPU6050_setFreefallDetectionCounterDecrement()</a>, <a class="el" href="mpu6050_8c_source.html#l00481">MPU6050_setFreefallDetectionDuration()</a>, <a class="el" href="mpu6050_8c_source.html#l00449">MPU6050_setFreefallDetectionThreshold()</a>, <a class="el" href="mpu6050_8c_source.html#l01444">MPU6050_setFSyncInterruptLevel()</a>, <a class="el" href="mpu6050_8c_source.html#l00371">MPU6050_setFullScaleAccelRange()</a>, <a class="el" href="mpu6050_8c_source.html#l00237">MPU6050_setFullScaleGyroRange()</a>, <a class="el" href="mpu6050_8c_source.html#l01387">MPU6050_setInterruptDrive()</a>, <a class="el" href="mpu6050_8c_source.html#l01406">MPU6050_setInterruptLatch()</a>, <a class="el" href="mpu6050_8c_source.html#l01425">MPU6050_setInterruptLatchClear()</a>, <a class="el" href="mpu6050_8c_source.html#l00897">MPU6050_setMasterClockSpeed()</a>, <a class="el" href="mpu6050_8c_source.html#l02311">MPU6050_setMotionDetectionCounterDecrement()</a>, <a class="el" href="mpu6050_8c_source.html#l00545">MPU6050_setMotionDetectionDuration()</a>, <a class="el" href="mpu6050_8c_source.html#l00515">MPU6050_setMotionDetectionThreshold()</a>, <a class="el" href="mpu6050_8c_source.html#l00117">MPU6050_setRate()</a>, <a class="el" href="mpu6050_8c_source.html#l01127">MPU6050_setSlave4Address()</a>, <a class="el" href="mpu6050_8c_source.html#l01242">MPU6050_setSlave4MasterDelay()</a>, <a class="el" href="mpu6050_8c_source.html#l01146">MPU6050_setSlave4Register()</a>, <a class="el" href="mpu6050_8c_source.html#l00955">MPU6050_setSlaveAddress()</a>, <a class="el" href="mpu6050_8c_source.html#l01102">MPU6050_setSlaveDataLength()</a>, <a class="el" href="mpu6050_8c_source.html#l02176">MPU6050_setSlaveDelayEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l01003">MPU6050_setSlaveEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l02118">MPU6050_setSlaveOutputByte()</a>, <a class="el" href="mpu6050_8c_source.html#l00981">MPU6050_setSlaveRegister()</a>, <a class="el" href="mpu6050_8c_source.html#l01029">MPU6050_setSlaveWordByteSwap()</a>, <a class="el" href="mpu6050_8c_source.html#l01080">MPU6050_setSlaveWordGroupOffset()</a>, <a class="el" href="mpu6050_8c_source.html#l01054">MPU6050_setSlaveWriteMode()</a>, <a class="el" href="mpu6050_8c_source.html#l02564">MPU6050_setWakeFrequency()</a>, <a class="el" href="mpu6050_8c_source.html#l00616">MPU6050_setZeroMotionDetectionDuration()</a>, <a class="el" href="mpu6050_8c_source.html#l00585">MPU6050_setZeroMotionDetectionThreshold()</a>, <a class="el" href="neopixel__stripe_8c_source.html#l00058">NeoPixelAllColor()</a>, <a class="el" href="neopixel__stripe_8c_source.html#l00044">NeoPixelAllOff()</a>, <a class="el" href="neopixel__stripe_8c_source.html#l00107">NeoPixelBrightness()</a>, <a class="el" href="neopixel__stripe_8c_source.html#l00125">NeoPixelHSV2Color()</a>, <a class="el" href="neopixel__stripe_8c_source.html#l00038">NeoPixelInit()</a>, <a class="el" href="neopixel__stripe_8c_source.html#l00112">NeoPixelRainbow()</a>, <a class="el" href="neopixel__stripe_8c_source.html#l00070">NeoPixelSetArray()</a>, <a class="el" href="neopixel__stripe_8c_source.html#l00065">NeoPixelSetPixel()</a>, <a class="el" href="neopixel__stripe_8c_source.html#l00088">NeoPixelShift()</a>, <a class="el" href="_proyecto___integrador___colazo_8c_source.html#l00396">ProcesarTask()</a>, <a class="el" href="pwm__mcu_8c_source.html#l00158">PWMDeinit()</a>, <a class="el" href="pwm__mcu_8c_source.html#l00039">PWMInit()</a>, <a class="el" href="pwm__mcu_8c_source.html#l00098">PWMOff()</a>, <a class="el" href="pwm__mcu_8c_source.html#l00081">PWMOn()</a>, <a class="el" href="pwm__mcu_8c_source.html#l00115">PWMSetDutyCycle()</a>, <a class="el" href="pwm__mcu_8c_source.html#l00140">PWMSetFreq()</a>, <a class="el" href="rtc__mcu_8c_source.html#l00029">RtcConfig()</a>, <a class="el" href="rtc__mcu_8c_source.html#l00051">RtcRead()</a>, <a class="el" href="servo__sg90_8c_source.html#l00033">ServoInit()</a>, <a class="el" href="servo__sg90_8c_source.html#l00051">ServoMove()</a>, <a class="el" href="ili9341_8c_source.html#l00212">SetCursorPosition()</a>, <a class="el" href="hx711_8c_source.html#l00029">shiftIn()</a>, <a class="el" href="_si7007_8c_source.html#l00082">Si7007Init()</a>, <a class="el" href="_si7007_8c_source.html#l00112">Si7007MeasureHumidity()</a>, <a class="el" href="_si7007_8c_source.html#l00099">Si7007MeasureTemperature()</a>, <a class="el" href="spi__mcu_8c_source.html#l00059">SpiInit()</a>, <a class="el" href="spi__mcu_8c_source.html#l00105">SpiRead()</a>, <a class="el" href="spi__mcu_8c_source.html#l00184">SpiReadWrite()</a>, <a class="el" href="spi__mcu_8c_source.html#l00145">SpiWrite()</a>, <a class="el" href="switch_8c_source.html#l00047">SwitchActivInt()</a>, <a class="el" href="switch_8c_source.html#l00038">SwitchesRead()</a>, <a class="el" href="timer__mcu_8c_source.html#l00055">TimerInit()</a>, <a class="el" href="timer__mcu_8c_source.html#l00138">TimerReset()</a>, <a class="el" href="timer__mcu_8c_source.html#l00110">TimerStart()</a>, <a class="el" href="timer__mcu_8c_source.html#l00124">TimerStop()</a>, <a class="el" href="uart__mcu_8c_source.html#l00107">UartInit()</a>, <a class="el" href="uart__mcu_8c_source.html#l00222">UartItoa()</a>, <a class="el" href="uart__mcu_8c_source.html#l00161">UartReadBuffer()</a>, <a class="el" href="uart__mcu_8c_source.html#l00142">UartReadByte()</a>, <a class="el" href="uart__mcu_8c_source.html#l00209">UartSendBuffer()</a>, <a class="el" href="uart__mcu_8c_source.html#l00180">UartSendByte()</a>, <a class="el" href="uart__mcu_8c_source.html#l00193">UartSendString()</a>, <a class="el" href="ws2812b_8c_source.html#l00329">ws2812bGammaCorrection()</a>, <a class="el" href="ws2812b_8c_source.html#l00340">ws2812bSend()</a>, <a class="el" href="ws2812b_8c_source.html#l00050">ws2812bSendHigh()</a> y <a class="el" href="ws2812b_8c_source.html#l00189">ws2812bSendLow()</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_2f99b66422f485751420ed5dc0377ed3.html">Colazo-1C-2024</a></li><li class="navelem"><a class="el" href="dir_d1da8305da4f85333193a9df968102c7.html">firmware</a></li><li class="navelem"><a class="el" href="dir_bbecd417106104fd38af04615501f7f8.html">projects</a></li><li class="navelem"><a class="el" href="dir_5ad6edfba81c8e4b1ca7274aabb7dad2.html">Proyecto_Integrador_Colazo</a></li><li class="navelem"><a class="el" href="dir_08c1851935e661a5df7ebde1f1d31a74.html">main</a></li><li class="navelem"><a class="el" href="_proyecto___integrador___colazo_8c.html">Proyecto_Integrador_Colazo.c</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
+  </ul>
+</div>
+</body>
+</html>
