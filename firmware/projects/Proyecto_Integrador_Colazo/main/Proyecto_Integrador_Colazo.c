@@ -1,4 +1,4 @@
-/*! @mainpage Monitoreo de temperatura en caja transportadora de vacunas
+/*! @mainpage Monitoreo de temperatura, humedad y luz en caja transportadora de vacunas.
  *
  * @section genDesc General Description
  *
@@ -23,7 +23,7 @@
  * |:----------:|:-----------------------------------------------|
  * | 15/05/2024 | Inicio del proyecto		                     |
  * |05/06/2024  |Inicio de documentación                         |
- * |            |Fin de documentación                            |
+ * |18/06/2024  |Fin de documentación                            |
  *
  *
  * @author Ever Colazo (everf97@gmail.com)
@@ -319,7 +319,6 @@ void mostrarTask()
 				arreglo_colores_dinamico[3] = NEOPIXEL_COLOR_OFF;
 				arreglo_colores_dinamico[4] = NEOPIXEL_COLOR_OFF;
 				arreglo_colores_dinamico[5] = NEOPIXEL_COLOR_OFF;
-				arreglo_colores_dinamico[6] = NEOPIXEL_COLOR_OFF;
 				arreglo_colores_dinamico[6] = arreglo_colores[6];
 				arreglo_colores_dinamico[7] = arreglo_colores[7];
 			}
